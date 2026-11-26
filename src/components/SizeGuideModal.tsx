@@ -31,7 +31,7 @@ export function SizeGuideModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm"
           onClick={onClose}
         >
           <motion.div
@@ -39,12 +39,12 @@ export function SizeGuideModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xl rounded-sm border border-white/15 bg-[#0E0E10] p-6 shadow-2xl"
+            className="w-full max-w-xl rounded-xl border border-black/10 bg-white p-6 shadow-2xl"
           >
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <div className="flex items-center justify-between border-b border-black/[0.08] pb-4">
               <div className="flex items-center gap-2.5">
-                <Ruler className="h-4 w-4 text-white" />
-                <h2 className="font-display text-lg font-bold tracking-tight text-white">
+                <Ruler className="h-4 w-4 text-[#FF4D1C]" />
+                <h2 className="font-display text-lg font-bold tracking-tight text-[#0E0E14]">
                   ZELVYN EU FIT MATRIX
                 </h2>
               </div>
@@ -52,20 +52,20 @@ export function SizeGuideModal({
                 type="button"
                 onClick={onClose}
                 aria-label="Close size guide"
-                className="rounded-sm border border-white/10 p-1.5 text-[#8A8A8E] transition hover:border-white/30 hover:text-white"
+                className="rounded-md border border-black/10 p-1.5 text-[#555563] transition hover:border-[#FF4D1C] hover:text-[#FF4D1C]"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
 
-            <p className="mt-4 text-xs leading-relaxed text-[#8A8A8E]">
+            <p className="mt-4 text-xs leading-relaxed text-[#555563]">
               Measure heel-to-toe length standing flat against a wall. Between
               sizes? Select the larger EU size for chunky sneakers and slides.
             </p>
 
-            <div className="mt-4 overflow-x-auto rounded-sm border border-white/10">
+            <div className="mt-4 overflow-x-auto rounded-lg border border-black/10">
               <table className="w-full text-left font-mono text-xs">
-                <thead className="border-b border-white/10 bg-[#161619] text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                <thead className="border-b border-black/10 bg-[#F3F4F8] text-[10px] font-bold tracking-[0.16em] text-[#555563] uppercase">
                   <tr>
                     <th className="px-3 py-2.5">EU</th>
                     <th className="px-3 py-2.5">UK</th>
@@ -74,16 +74,16 @@ export function SizeGuideModal({
                     <th className="px-3 py-2.5">CM</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.06]">
+                <tbody className="divide-y divide-black/[0.06]">
                   {SIZE_CHART.map((row) => (
-                    <tr key={row.eu} className="hover:bg-white/[0.03]">
-                      <td className="px-3 py-2 font-bold text-white">
+                    <tr key={row.eu} className="hover:bg-[#FFF6F2]">
+                      <td className="px-3 py-2 font-bold text-[#FF4D1C]">
                         {row.eu}
                       </td>
-                      <td className="px-3 py-2 text-[#D1D1D6]">{row.uk}</td>
-                      <td className="px-3 py-2 text-[#D1D1D6]">{row.usM}</td>
-                      <td className="px-3 py-2 text-[#D1D1D6]">{row.usW}</td>
-                      <td className="px-3 py-2 text-[#8A8A8E]">{row.cm} cm</td>
+                      <td className="px-3 py-2 text-[#0E0E14]">{row.uk}</td>
+                      <td className="px-3 py-2 text-[#0E0E14]">{row.usM}</td>
+                      <td className="px-3 py-2 text-[#0E0E14]">{row.usW}</td>
+                      <td className="px-3 py-2 text-[#555563]">{row.cm} cm</td>
                     </tr>
                   ))}
                 </tbody>

@@ -28,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ZELVYN — KEEPIN' IT REAL | Luxury Monochrome Footwear",
+  title: "ZELVYN — KEEPIN' IT REAL | Vibrant Streetwear Footwear",
   description:
     "Unisex luxury streetwear footwear flagship. Boys & Girls sneakers, joggers, loafers, grippers, and molded slides delivered across Pakistan.",
 };
@@ -41,9 +41,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} dark`}
+      className={`${syne.variable} ${plusJakarta.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="flex min-h-screen flex-col bg-[#050505] text-[#F5F5F7] antialiased">
+      <body className="flex min-h-screen flex-col bg-[#FAFAFC] text-[#0E0E14] antialiased">
         <StoreProvider>
           <Navbar />
           <main className="flex-1">{children}</main>

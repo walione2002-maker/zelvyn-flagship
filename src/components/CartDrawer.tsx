@@ -71,7 +71,7 @@ export function CartDrawer() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setCartOpen(false)}
-            className="fixed inset-0 bg-black/75 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/35 backdrop-blur-sm"
           />
 
           {/* Spring Slide-Over Panel */}
@@ -80,13 +80,13 @@ export function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 320, damping: 32 }}
-            className="relative z-10 flex h-full w-full max-w-md flex-col border-l border-white/15 bg-[#0A0A0C] text-[#F5F5F7] shadow-2xl"
+            className="relative z-10 flex h-full w-full max-w-md flex-col border-l border-black/10 bg-white text-[#0E0E14] shadow-2xl"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
+            <div className="flex items-center justify-between border-b border-black/[0.08] px-6 py-5">
               <div className="flex items-center gap-3">
-                <ShoppingBag className="h-4 w-4 text-white" />
-                <h2 className="font-display text-lg font-extrabold tracking-tight">
+                <ShoppingBag className="h-4 w-4 text-[#FF4D1C]" />
+                <h2 className="font-display text-lg font-extrabold tracking-tight text-[#0E0E14]">
                   YOUR BAG ({hydrated ? cartCount : 0})
                 </h2>
               </div>
@@ -94,28 +94,28 @@ export function CartDrawer() {
                 type="button"
                 onClick={() => setCartOpen(false)}
                 aria-label="Close bag drawer"
-                className="rounded-sm border border-white/10 p-1.5 text-[#8A8A8E] transition hover:border-white/30 hover:text-white"
+                className="rounded-md border border-black/10 p-1.5 text-[#555563] transition hover:border-[#FF4D1C] hover:text-[#FF4D1C]"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
 
             {/* Free Delivery Progress Bar */}
-            <div className="border-b border-white/[0.08] bg-[#0E0E10] px-6 py-3.5">
-              <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.14em] uppercase">
-                <span className="flex items-center gap-1.5 text-[#D1D1D6]">
-                  <Truck className="h-3.5 w-3.5 text-white" />
+            <div className="border-b border-black/[0.08] bg-[#ECFDF5] px-6 py-3.5">
+              <div className="flex items-center justify-between font-mono text-[10px] font-semibold tracking-[0.14em] uppercase">
+                <span className="flex items-center gap-1.5 text-[#059669]">
+                  <Truck className="h-3.5 w-3.5 text-[#059669]" />
                   {cart.length === 0
                     ? "FREE DELIVERY OVER PKR 8,000"
                     : freeShippingRemaining === 0
                       ? "UNLOCKED: FREE NATIONWIDE DELIVERY"
                       : `${formatPKR(freeShippingRemaining)} AWAY FROM FREE DELIVERY`}
                 </span>
-                <span className="text-[#8A8A8E]">{shippingProgress}%</span>
+                <span className="text-[#059669]">{shippingProgress}%</span>
               </div>
-              <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-white/10">
+              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#059669]/15">
                 <div
-                  className="h-full bg-white transition-all duration-500"
+                  className="h-full bg-gradient-to-r from-[#059669] to-[#10B981] transition-all duration-500"
                   style={{ width: `${cart.length === 0 ? 0 : shippingProgress}%` }}
                 />
               </div>
@@ -125,27 +125,27 @@ export function CartDrawer() {
             <div className="flex-1 overflow-y-auto px-6 py-4">
               {!hydrated || cart.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center py-12 text-center">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-sm border border-white/10 bg-[#161619]">
-                    <ShoppingBag className="h-6 w-6 text-[#8A8A8E]" />
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-black/10 bg-[#F3F4F8]">
+                    <ShoppingBag className="h-6 w-6 text-[#FF4D1C]" />
                   </div>
-                  <p className="mt-4 font-display text-lg font-bold text-white">
+                  <p className="mt-4 font-display text-lg font-bold text-[#0E0E14]">
                     YOUR BAG IS EMPTY
                   </p>
-                  <p className="mt-1.5 max-w-xs text-xs leading-relaxed text-[#8A8A8E]">
+                  <p className="mt-1.5 max-w-xs text-xs leading-relaxed text-[#555563]">
                     Explore Season 01 drops across Boys, Girls, and Unisex
                     silhouettes.
                   </p>
                   <Link
                     href="/shop"
                     onClick={() => setCartOpen(false)}
-                    className="mt-6 inline-flex h-10 items-center gap-2 rounded-sm border border-white bg-white px-5 font-mono text-[11px] font-bold tracking-[0.16em] text-[#050505] transition hover:bg-[#050505] hover:text-white"
+                    className="mt-6 inline-flex h-10 items-center gap-2 rounded-md bg-[#FF4D1C] px-5 font-mono text-[11px] font-bold tracking-[0.16em] text-white shadow-[0_6px_18px_rgba(255,77,28,0.28)] transition hover:bg-[#0E0E14]"
                   >
                     EXPLORE CATALOG
                     <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
               ) : (
-                <div className="divide-y divide-white/[0.08]">
+                <div className="divide-y divide-black/[0.08]">
                   {cart.map((item) => (
                     <div
                       key={`${item.productId}-${item.size}-${item.color}`}
@@ -154,7 +154,7 @@ export function CartDrawer() {
                       <Link
                         href={`/product/${item.slug}`}
                         onClick={() => setCartOpen(false)}
-                        className="h-24 w-20 shrink-0 overflow-hidden rounded-sm border border-white/10 bg-[#161619]"
+                        className="h-24 w-20 shrink-0 overflow-hidden rounded-md border border-black/10 bg-[#F3F4F8]"
                       >
                         <img
                           src={item.image}
@@ -168,11 +168,11 @@ export function CartDrawer() {
                             <Link
                               href={`/product/${item.slug}`}
                               onClick={() => setCartOpen(false)}
-                              className="font-display text-sm font-bold text-white hover:underline"
+                              className="font-display text-sm font-bold text-[#0E0E14] hover:text-[#FF4D1C]"
                             >
                               {item.name}
                             </Link>
-                            <p className="mt-0.5 font-mono text-[10px] tracking-[0.14em] text-[#8A8A8E]">
+                            <p className="mt-0.5 font-mono text-[10px] tracking-[0.14em] text-[#555563]">
                               EU {item.size} · {item.color.toUpperCase()}
                             </p>
                           </div>
@@ -186,14 +186,14 @@ export function CartDrawer() {
                               )
                             }
                             aria-label={`Remove ${item.name}`}
-                            className="text-[#6E6E73] transition hover:text-white"
+                            className="text-[#8E8E9E] transition hover:text-[#E11D74]"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
                           </button>
                         </div>
 
                         <div className="mt-3 flex items-center justify-between">
-                          <div className="inline-flex items-center rounded-sm border border-white/15 bg-[#161619]">
+                          <div className="inline-flex items-center rounded-md border border-black/10 bg-[#F3F4F8]">
                             <button
                               type="button"
                               onClick={() =>
@@ -205,11 +205,11 @@ export function CartDrawer() {
                                 )
                               }
                               aria-label="Decrease quantity"
-                              className="px-2 py-1 text-[#A1A1A6] hover:text-white"
+                              className="px-2 py-1 text-[#555563] hover:text-[#0E0E14]"
                             >
                               <Minus className="h-3 w-3" />
                             </button>
-                            <span className="min-w-7 text-center font-mono text-xs text-white">
+                            <span className="min-w-7 text-center font-mono text-xs font-semibold text-[#0E0E14]">
                               {item.quantity}
                             </span>
                             <button
@@ -223,12 +223,12 @@ export function CartDrawer() {
                                 )
                               }
                               aria-label="Increase quantity"
-                              className="px-2 py-1 text-[#A1A1A6] hover:text-white"
+                              className="px-2 py-1 text-[#555563] hover:text-[#0E0E14]"
                             >
                               <Plus className="h-3 w-3" />
                             </button>
                           </div>
-                          <span className="font-mono text-xs font-semibold text-white">
+                          <span className="font-mono text-xs font-bold text-[#0E0E14]">
                             {formatPKR(item.pricePKR * item.quantity)}
                           </span>
                         </div>
@@ -241,31 +241,31 @@ export function CartDrawer() {
 
             {/* Footer Totals & Promo */}
             {hydrated && cart.length > 0 && (
-              <div className="border-t border-white/10 bg-[#0E0E10] px-6 py-5">
+              <div className="border-t border-black/[0.08] bg-[#F6F7FA] px-6 py-5">
                 {/* Promo Code Input */}
                 <form onSubmit={handleApplyPromo} className="flex gap-2">
                   <div className="relative flex-1">
-                    <Tag className="pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#8A8A8E]" />
+                    <Tag className="pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#757585]" />
                     <input
                       type="text"
                       value={promoInput}
                       onChange={(e) => setPromoInput(e.target.value)}
                       placeholder="PROMO CODE (REAL10 / ZELVYN50)"
                       aria-label="Promo code"
-                      className="h-10 w-full rounded-sm border border-white/10 bg-[#161619] pr-3 pl-9 font-mono text-[11px] text-white uppercase placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                      className="h-10 w-full rounded-md border border-black/10 bg-white pr-3 pl-9 font-mono text-[11px] text-[#0E0E14] uppercase placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:outline-none"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="h-10 rounded-sm border border-white/20 bg-[#161619] px-4 font-mono text-[10px] font-bold tracking-[0.16em] text-white transition hover:border-white hover:bg-white hover:text-[#050505]"
+                    className="h-10 rounded-md bg-[#0E0E14] px-4 font-mono text-[10px] font-bold tracking-[0.16em] text-white transition hover:bg-[#0052FF]"
                   >
                     APPLY
                   </button>
                 </form>
 
                 {promoCode && promoLabel && (
-                  <div className="mt-2.5 flex items-center justify-between rounded-sm border border-white/15 bg-white/[0.04] px-3 py-1.5 font-mono text-[10px]">
-                    <span className="text-white">
+                  <div className="mt-2.5 flex items-center justify-between rounded-md border border-[#059669]/25 bg-[#ECFDF5] px-3 py-1.5 font-mono text-[10px]">
+                    <span className="text-[#059669]">
                       ACTIVE: <strong>{promoCode}</strong> ({promoLabel})
                     </span>
                     <button
@@ -274,7 +274,7 @@ export function CartDrawer() {
                         clearPromoCode();
                         setPromoFeedback(null);
                       }}
-                      className="text-[#8A8A8E] hover:text-white"
+                      className="font-semibold text-[#059669] hover:underline"
                     >
                       REMOVE
                     </button>
@@ -282,39 +282,39 @@ export function CartDrawer() {
                 )}
 
                 {promoFeedback && !promoFeedback.ok && (
-                  <p className="mt-2 font-mono text-[10px] text-[#A1A1A6]">
+                  <p className="mt-2 font-mono text-[10px] font-medium text-[#E11D74]">
                     {promoFeedback.message}
                   </p>
                 )}
 
                 {/* Summary Breakdown */}
-                <div className="mt-4 space-y-2 border-t border-white/[0.08] pt-4 font-mono text-xs">
-                  <div className="flex justify-between text-[#8A8A8E]">
+                <div className="mt-4 space-y-2 border-t border-black/[0.08] pt-4 font-mono text-xs">
+                  <div className="flex justify-between text-[#555563]">
                     <span>SUBTOTAL</span>
-                    <span className="text-white">{formatPKR(subtotalPKR)}</span>
+                    <span className="font-semibold text-[#0E0E14]">{formatPKR(subtotalPKR)}</span>
                   </div>
                   {discountPKR > 0 && (
-                    <div className="flex justify-between text-[#D1D1D6]">
+                    <div className="flex justify-between font-semibold text-[#059669]">
                       <span>DISCOUNT ({promoCode})</span>
                       <span>−{formatPKR(discountPKR)}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-[#8A8A8E]">
+                  <div className="flex justify-between text-[#555563]">
                     <span>DELIVERY</span>
-                    <span className="text-white">
+                    <span className="font-semibold text-[#0E0E14]">
                       {shippingPKR === 0 ? "FREE" : formatPKR(shippingPKR)}
                     </span>
                   </div>
-                  <div className="flex justify-between border-t border-white/10 pt-2.5 text-sm font-bold text-white">
+                  <div className="flex justify-between border-t border-black/[0.08] pt-2.5 text-sm font-bold text-[#0E0E14]">
                     <span>ESTIMATED TOTAL</span>
-                    <span>{formatPKR(totalPKR)}</span>
+                    <span className="text-[#FF4D1C]">{formatPKR(totalPKR)}</span>
                   </div>
                 </div>
 
                 <Link
                   href="/checkout"
                   onClick={() => setCartOpen(false)}
-                  className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-sm border border-white bg-white font-mono text-xs font-bold tracking-[0.18em] text-[#050505] transition hover:bg-[#050505] hover:text-white"
+                  className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#FF4D1C] font-mono text-xs font-bold tracking-[0.18em] text-white shadow-[0_8px_20px_rgba(255,77,28,0.3)] transition hover:bg-[#0E0E14]"
                 >
                   PROCEED TO CHECKOUT
                   <ArrowRight className="h-4 w-4" />

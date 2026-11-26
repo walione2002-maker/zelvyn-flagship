@@ -74,25 +74,25 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 w-full">
-      {/* Announcement Marquee */}
-      <div className="w-full overflow-hidden border-b border-white/[0.08] bg-[#08080A] py-2">
-        <div className="animate-zelvyn-marquee flex items-center gap-8 whitespace-nowrap font-mono text-[10px] tracking-[0.22em] text-[#A1A1A6] uppercase">
+      {/* Vibrant Announcement Marquee */}
+      <div className="w-full overflow-hidden bg-gradient-to-r from-[#FF4D1C] via-[#E11D74] to-[#0052FF] py-2">
+        <div className="animate-zelvyn-marquee flex items-center gap-8 whitespace-nowrap font-mono text-[10px] font-semibold tracking-[0.22em] text-white uppercase">
           {[...ANNOUNCEMENT_ITEMS, ...ANNOUNCEMENT_ITEMS].map((item, idx) => (
             <span key={idx} className="flex items-center gap-8">
               <span>{item}</span>
-              <span className="h-1 w-1 rounded-full bg-white/30" />
+              <span className="h-1.5 w-1.5 rounded-full bg-white/80" />
             </span>
           ))}
         </div>
       </div>
 
-      {/* Glassmorphic Main Navbar */}
+      {/* Frosted Light Glassmorphic Main Navbar */}
       <nav
         className={cn(
-          "w-full border-b transition-colors duration-300 backdrop-blur-xl",
+          "w-full border-b transition-all duration-300 backdrop-blur-xl",
           scrolled
-            ? "border-white/15 bg-black/85 shadow-[0_12px_40px_rgba(0,0,0,0.65)]"
-            : "border-white/10 bg-black/75"
+            ? "border-black/10 bg-white/92 shadow-[0_10px_30px_rgba(14,14,20,0.08)]"
+            : "border-black/[0.06] bg-white/80"
         )}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -102,7 +102,7 @@ export function Navbar() {
               type="button"
               onClick={() => setMobileMenuOpen((v) => !v)}
               aria-label="Toggle navigation menu"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-white/10 text-[#F5F5F7] transition hover:border-white/30 md:hidden"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-black/10 bg-white text-[#0E0E14] transition hover:border-[#FF4D1C] hover:text-[#FF4D1C] md:hidden"
             >
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -112,10 +112,10 @@ export function Navbar() {
               className="group flex flex-col leading-none"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <span className="font-display text-lg font-extrabold tracking-[-0.06em] text-[#F5F5F7] sm:text-2xl">
+              <span className="font-display text-lg font-extrabold tracking-[-0.06em] text-[#0E0E14] sm:text-2xl">
                 ZELVYN
               </span>
-              <span className="font-mono text-[7.5px] tracking-[0.24em] text-[#8A8A8E] transition-colors group-hover:text-white sm:text-[8px] sm:tracking-[0.28em]">
+              <span className="font-mono text-[7.5px] font-semibold tracking-[0.24em] text-[#FF4D1C] transition-colors group-hover:text-[#0052FF] sm:text-[8px] sm:tracking-[0.28em]">
                 KEEPIN&apos; IT REAL
               </span>
             </Link>
@@ -135,15 +135,15 @@ export function Navbar() {
                   key={link.label}
                   href={link.href}
                   className={cn(
-                    "relative font-mono text-[11px] tracking-[0.18em] transition-colors",
+                    "relative font-mono text-[11px] font-semibold tracking-[0.18em] transition-colors",
                     isActive
-                      ? "text-white"
-                      : "text-[#8A8A8E] hover:text-[#F5F5F7]"
+                      ? "text-[#FF4D1C]"
+                      : "text-[#555563] hover:text-[#0E0E14]"
                   )}
                 >
                   {link.label}
                   {link.href === "/orders" && hydrated && orders.length > 0 && (
-                    <span className="ml-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full border border-white/20 bg-white/10 px-1 font-mono text-[9px] text-white">
+                    <span className="ml-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[#0052FF] px-1 font-mono text-[9px] font-bold text-white">
                       {orders.length}
                     </span>
                   )}
@@ -158,10 +158,10 @@ export function Navbar() {
               type="button"
               onClick={() => setSearchOpen(true)}
               aria-label="Search footwear catalog"
-              className="inline-flex h-9 items-center gap-2 rounded-sm border border-white/10 bg-[#0E0E10] px-2.5 text-xs text-[#8A8A8E] transition hover:border-white/30 hover:text-white sm:px-3"
+              className="inline-flex h-9 items-center gap-2 rounded-md border border-black/10 bg-[#F3F4F8] px-2.5 text-xs text-[#555563] transition hover:border-[#0052FF] hover:bg-white hover:text-[#0052FF] sm:px-3"
             >
               <Search className="h-3.5 w-3.5" />
-              <span className="hidden font-mono text-[10px] tracking-[0.15em] lg:inline">
+              <span className="hidden font-mono text-[10px] font-semibold tracking-[0.15em] lg:inline">
                 SEARCH
               </span>
             </button>
@@ -170,16 +170,16 @@ export function Navbar() {
               type="button"
               onClick={() => setAuthOpen(true)}
               aria-label="Guest login or account"
-              className="inline-flex h-9 items-center gap-1.5 rounded-sm border border-white/10 bg-[#0E0E10] px-2.5 text-xs text-[#F5F5F7] transition hover:border-white/35 sm:gap-2 sm:px-3"
+              className="inline-flex h-9 items-center gap-1.5 rounded-md border border-black/10 bg-[#F3F4F8] px-2.5 text-xs text-[#0E0E14] transition hover:border-[#E11D74] hover:bg-white hover:text-[#E11D74] sm:gap-2 sm:px-3"
             >
-              <User className="h-3.5 w-3.5 text-[#8A8A8E]" />
-              <span className="hidden font-mono text-[10px] tracking-[0.14em] uppercase sm:inline">
+              <User className="h-3.5 w-3.5 text-[#555563]" />
+              <span className="hidden font-mono text-[10px] font-semibold tracking-[0.14em] uppercase sm:inline">
                 {hydrated && user
                   ? userInitials || "GUEST"
                   : "GUEST"}
               </span>
               {hydrated && user && (
-                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#059669]" />
               )}
             </button>
 
@@ -187,13 +187,13 @@ export function Navbar() {
               type="button"
               onClick={() => setCartOpen(true)}
               aria-label="Open shopping bag"
-              className="group relative inline-flex h-9 items-center gap-1.5 rounded-sm border border-white bg-white px-2.5 text-[#050505] transition hover:bg-[#050505] hover:text-white sm:gap-2 sm:px-3"
+              className="group relative inline-flex h-9 items-center gap-1.5 rounded-md bg-[#FF4D1C] px-2.5 text-white shadow-[0_6px_18px_rgba(255,77,28,0.28)] transition hover:bg-[#0E0E14] hover:shadow-[0_6px_18px_rgba(14,14,20,0.2)] sm:gap-2 sm:px-3"
             >
               <ShoppingBag className="h-3.5 w-3.5" />
               <span className="font-mono text-[10px] font-bold tracking-[0.12em] sm:tracking-[0.14em]">
                 BAG
               </span>
-              <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[#050505] px-1 font-mono text-[9px] font-bold text-white transition-colors group-hover:bg-white group-hover:text-[#050505]">
+              <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-white px-1 font-mono text-[9px] font-bold text-[#FF4D1C] transition-colors group-hover:text-[#0E0E14]">
                 {hydrated ? cartCount : 0}
               </span>
             </button>
@@ -208,19 +208,19 @@ export function Navbar() {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden border-t border-white/10 bg-[#070709] md:hidden"
+              className="overflow-hidden border-t border-black/10 bg-white md:hidden"
             >
-              <div className="flex flex-col divide-y divide-white/[0.06] px-4 py-2">
+              <div className="flex flex-col divide-y divide-black/[0.06] px-4 py-2">
                 {NAV_LINKS.map((link) => (
                   <Link
                     key={link.label}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between py-3.5 font-mono text-xs tracking-[0.2em] text-[#F5F5F7]"
+                    className="flex items-center justify-between py-3.5 font-mono text-xs font-semibold tracking-[0.2em] text-[#0E0E14] hover:text-[#FF4D1C]"
                   >
                     <span>{link.label}</span>
                     {link.href === "/orders" && (
-                      <Package className="h-3.5 w-3.5 text-[#8A8A8E]" />
+                      <Package className="h-3.5 w-3.5 text-[#0052FF]" />
                     )}
                   </Link>
                 ))}
@@ -230,14 +230,14 @@ export function Navbar() {
                     setMobileMenuOpen(false);
                     setAuthOpen(true);
                   }}
-                  className="flex items-center justify-between py-3.5 text-left font-mono text-xs tracking-[0.2em] text-[#8A8A8E]"
+                  className="flex items-center justify-between py-3.5 text-left font-mono text-xs font-semibold tracking-[0.2em] text-[#555563]"
                 >
                   <span>
                     {hydrated && user
                       ? `SESSION: ${user.fullName.toUpperCase()}`
                       : "GUEST LOGIN / ACCOUNT"}
                   </span>
-                  <User className="h-3.5 w-3.5" />
+                  <User className="h-3.5 w-3.5 text-[#E11D74]" />
                 </button>
               </div>
             </motion.div>

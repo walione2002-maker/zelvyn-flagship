@@ -52,21 +52,21 @@ export function ReceiptView({ order }: { order: OrderRecord }) {
   };
 
   return (
-    <div className="print-receipt rounded-sm border border-white/15 bg-[#0E0E10] p-6 sm:p-8">
-      <div className="flex flex-col justify-between gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-start">
+    <div className="print-receipt rounded-xl border border-black/10 bg-white p-6 shadow-sm sm:p-8">
+      <div className="flex flex-col justify-between gap-4 border-b border-black/[0.08] pb-6 sm:flex-row sm:items-start">
         <div>
-          <p className="font-display text-2xl font-extrabold tracking-[-0.06em] text-white">
+          <p className="font-display text-2xl font-extrabold tracking-[-0.06em] text-[#0E0E14]">
             ZELVYN
           </p>
-          <p className="font-mono text-[10px] tracking-[0.26em] text-[#8A8A8E]">
+          <p className="font-mono text-[10px] font-bold tracking-[0.26em] text-[#FF4D1C]">
             KEEPIN&apos; IT REAL — OFFICIAL RECEIPT
           </p>
         </div>
         <div className="text-left sm:text-right">
-          <p className="font-mono text-xs font-bold text-white">
+          <p className="font-mono text-xs font-bold text-[#0052FF]">
             {order.orderId}
           </p>
-          <p className="mt-1 font-mono text-[11px] text-[#8A8A8E]">
+          <p className="mt-1 font-mono text-[11px] text-[#555563]">
             {new Date(order.createdAt).toLocaleString("en-PK", {
               dateStyle: "medium",
               timeStyle: "short",
@@ -75,85 +75,85 @@ export function ReceiptView({ order }: { order: OrderRecord }) {
         </div>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-6 border-b border-white/10 pb-6 sm:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-6 border-b border-black/[0.08] pb-6 sm:grid-cols-2">
         <div>
-          <p className="font-mono text-[10px] tracking-[0.18em] text-[#8A8A8E] uppercase">
+          <p className="font-mono text-[10px] font-bold tracking-[0.18em] text-[#555563] uppercase">
             Recipient &amp; Dispatch
           </p>
-          <p className="mt-2 text-sm font-semibold text-white">
+          <p className="mt-2 text-sm font-bold text-[#0E0E14]">
             {order.customer.fullName}
           </p>
-          <p className="mt-1 font-mono text-xs text-[#D1D1D6]">
+          <p className="mt-1 font-mono text-xs text-[#3F3F4E]">
             {order.customer.phone}
           </p>
-          <p className="font-mono text-xs text-[#8A8A8E]">
+          <p className="font-mono text-xs text-[#555563]">
             {order.customer.email}
           </p>
-          <p className="mt-2 text-xs text-[#A1A1A6]">
+          <p className="mt-2 text-xs text-[#555563]">
             {order.customer.address}, {order.customer.city}
           </p>
         </div>
 
         <div>
-          <p className="font-mono text-[10px] tracking-[0.18em] text-[#8A8A8E] uppercase">
+          <p className="font-mono text-[10px] font-bold tracking-[0.18em] text-[#555563] uppercase">
             Payment &amp; Fulfillment
           </p>
-          <p className="mt-2 font-mono text-xs font-semibold text-white">
+          <p className="mt-2 font-mono text-xs font-semibold text-[#0E0E14]">
             {order.paymentSummary}
           </p>
-          <p className="mt-2 inline-block rounded-sm border border-white/15 bg-[#161619] px-2.5 py-1 font-mono text-[10px] tracking-[0.14em] text-white uppercase">
+          <p className="mt-2 inline-block rounded-md border border-[#059669]/25 bg-[#ECFDF5] px-2.5 py-1 font-mono text-[10px] font-bold tracking-[0.14em] text-[#059669] uppercase">
             STAGE: {ORDER_STAGE_LABELS[order.statusStage]}
           </p>
         </div>
       </div>
 
-      <div className="mt-6 divide-y divide-white/[0.07]">
+      <div className="mt-6 divide-y divide-black/[0.06]">
         {order.items.map((item) => (
           <div
             key={`${item.productId}-${item.size}-${item.color}`}
             className="flex items-center justify-between gap-4 py-3 text-sm"
           >
             <div>
-              <p className="font-medium text-white">{item.name}</p>
-              <p className="font-mono text-[10px] tracking-[0.14em] text-[#8A8A8E]">
+              <p className="font-semibold text-[#0E0E14]">{item.name}</p>
+              <p className="font-mono text-[10px] tracking-[0.14em] text-[#555563]">
                 {item.sku} · EU {item.size} · {item.color} · QTY {item.quantity}
               </p>
             </div>
-            <span className="font-mono text-xs font-semibold text-white">
+            <span className="font-mono text-xs font-bold text-[#0E0E14]">
               {formatPKR(item.pricePKR * item.quantity)}
             </span>
           </div>
         ))}
       </div>
 
-      <div className="mt-6 space-y-2 border-t border-white/10 pt-4 font-mono text-xs">
-        <div className="flex justify-between text-[#8A8A8E]">
+      <div className="mt-6 space-y-2 border-t border-black/[0.08] pt-4 font-mono text-xs">
+        <div className="flex justify-between text-[#555563]">
           <span>SUBTOTAL</span>
-          <span className="text-white">{formatPKR(order.subtotalPKR)}</span>
+          <span className="font-semibold text-[#0E0E14]">{formatPKR(order.subtotalPKR)}</span>
         </div>
         {order.discountPKR > 0 && (
-          <div className="flex justify-between text-[#D1D1D6]">
+          <div className="flex justify-between font-semibold text-[#059669]">
             <span>PROMO ({order.promoCode})</span>
             <span>−{formatPKR(order.discountPKR)}</span>
           </div>
         )}
-        <div className="flex justify-between text-[#8A8A8E]">
+        <div className="flex justify-between text-[#555563]">
           <span>DELIVERY</span>
-          <span className="text-white">
+          <span className="font-semibold text-[#0E0E14]">
             {order.shippingPKR === 0 ? "FREE" : formatPKR(order.shippingPKR)}
           </span>
         </div>
-        <div className="flex justify-between border-t border-white/10 pt-3 text-base font-bold text-white">
+        <div className="flex justify-between border-t border-black/[0.08] pt-3 text-base font-bold text-[#0E0E14]">
           <span>TOTAL</span>
-          <span>{formatPKR(order.totalPKR)}</span>
+          <span className="text-[#FF4D1C]">{formatPKR(order.totalPKR)}</span>
         </div>
       </div>
 
-      <div className="no-print mt-6 flex flex-wrap gap-3 border-t border-white/10 pt-6">
+      <div className="no-print mt-6 flex flex-wrap gap-3 border-t border-black/[0.08] pt-6">
         <button
           type="button"
           onClick={() => window.print()}
-          className="inline-flex h-10 items-center gap-2 rounded-sm border border-white bg-white px-4 font-mono text-[11px] font-bold tracking-[0.14em] text-[#050505] transition hover:bg-[#050505] hover:text-white"
+          className="inline-flex h-10 items-center gap-2 rounded-md bg-[#FF4D1C] px-4 font-mono text-[11px] font-bold tracking-[0.14em] text-white transition hover:bg-[#0E0E14]"
         >
           <Printer className="h-3.5 w-3.5" />
           PRINT RECEIPT
@@ -161,7 +161,7 @@ export function ReceiptView({ order }: { order: OrderRecord }) {
         <button
           type="button"
           onClick={handleDownload}
-          className="inline-flex h-10 items-center gap-2 rounded-sm border border-white/20 bg-[#161619] px-4 font-mono text-[11px] font-bold tracking-[0.14em] text-white transition hover:border-white"
+          className="inline-flex h-10 items-center gap-2 rounded-md border border-black/15 bg-[#F3F4F8] px-4 font-mono text-[11px] font-bold tracking-[0.14em] text-[#0E0E14] transition hover:border-[#0052FF] hover:text-[#0052FF]"
         >
           <Download className="h-3.5 w-3.5" />
           DOWNLOAD (.TXT)

@@ -32,7 +32,7 @@ export function SearchModal() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-start justify-center bg-black/80 px-4 pt-20 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex items-start justify-center bg-black/35 px-4 pt-20 backdrop-blur-sm"
           onClick={() => setSearchOpen(false)}
         >
           <motion.div
@@ -41,31 +41,31 @@ export function SearchModal() {
             exit={{ opacity: 0, y: -12, scale: 0.98 }}
             transition={{ duration: 0.2 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-2xl overflow-hidden rounded-sm border border-white/15 bg-[#0E0E10] shadow-2xl"
+            className="w-full max-w-2xl overflow-hidden rounded-xl border border-black/10 bg-white shadow-2xl"
           >
-            <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3.5">
-              <Search className="h-4 w-4 text-[#8A8A8E]" />
+            <div className="flex items-center gap-3 border-b border-black/[0.08] px-4 py-3.5">
+              <Search className="h-4 w-4 text-[#FF4D1C]" />
               <input
                 type="text"
                 autoFocus
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search sneakers, grippers, loafers, crocs, or SKU..."
-                className="flex-1 bg-transparent text-sm text-white placeholder:text-[#5C5C62] focus:outline-none"
+                className="flex-1 bg-transparent text-sm text-[#0E0E14] placeholder:text-[#8E8E9E] focus:outline-none"
               />
               <button
                 type="button"
                 onClick={() => setSearchOpen(false)}
                 aria-label="Close search"
-                className="rounded-sm border border-white/10 p-1 text-[#8A8A8E] hover:text-white"
+                className="rounded-md border border-black/10 p-1 text-[#555563] hover:border-[#FF4D1C] hover:text-[#FF4D1C]"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
 
-            <div className="max-h-96 divide-y divide-white/[0.06] overflow-y-auto">
+            <div className="max-h-96 divide-y divide-black/[0.06] overflow-y-auto">
               {matches.length === 0 ? (
-                <div className="px-6 py-10 text-center font-mono text-xs text-[#8A8A8E]">
+                <div className="px-6 py-10 text-center font-mono text-xs text-[#555563]">
                   No silhouettes match &quot;{query}&quot;.
                 </div>
               ) : (
@@ -74,40 +74,40 @@ export function SearchModal() {
                     key={p.id}
                     href={`/product/${p.slug}`}
                     onClick={() => setSearchOpen(false)}
-                    className="flex items-center justify-between gap-4 px-4 py-3 transition hover:bg-white/[0.04]"
+                    className="flex items-center justify-between gap-4 px-4 py-3 transition hover:bg-[#F3F4F8]"
                   >
                     <div className="flex items-center gap-3.5">
                       <img
                         src={p.image}
                         alt={p.name}
-                        className="h-12 w-12 rounded-sm border border-white/10 object-cover"
+                        className="h-12 w-12 rounded-md border border-black/10 bg-[#F3F4F8] object-cover"
                       />
                       <div>
-                        <p className="font-display text-sm font-bold text-white">
+                        <p className="font-display text-sm font-bold text-[#0E0E14]">
                           {p.name}
                         </p>
-                        <p className="font-mono text-[10px] tracking-[0.14em] text-[#8A8A8E] uppercase">
+                        <p className="font-mono text-[10px] tracking-[0.14em] text-[#555563] uppercase">
                           {p.sku} · {p.gender} · {p.subType}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-xs font-semibold text-white">
+                      <span className="font-mono text-xs font-bold text-[#0E0E14]">
                         {formatPKR(p.pricePKR)}
                       </span>
-                      <ArrowRight className="h-3.5 w-3.5 text-[#8A8A8E]" />
+                      <ArrowRight className="h-3.5 w-3.5 text-[#FF4D1C]" />
                     </div>
                   </Link>
                 ))
               )}
             </div>
 
-            <div className="flex items-center justify-between border-t border-white/10 bg-[#08080A] px-4 py-2.5 font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E]">
+            <div className="flex items-center justify-between border-t border-black/[0.08] bg-[#F3F4F8] px-4 py-2.5 font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563]">
               <span>{matches.length} RESULTS</span>
               <Link
                 href={`/shop${query ? `?q=${encodeURIComponent(query)}` : ""}`}
                 onClick={() => setSearchOpen(false)}
-                className="text-white hover:underline"
+                className="text-[#0052FF] hover:underline"
               >
                 OPEN FULL CATALOG →
               </Link>

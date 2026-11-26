@@ -102,15 +102,15 @@ function ShopCatalogInner({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-      <div className="border-b border-white/[0.08] pb-8">
-        <p className="font-mono text-[10px] tracking-[0.26em] text-[#8A8A8E] uppercase">
+      <div className="border-b border-black/[0.08] pb-8">
+        <p className="font-mono text-[10px] font-bold tracking-[0.26em] text-[#FF4D1C] uppercase">
           ZELVYN ARCHIVE / ALL DROPS
         </p>
         <div className="mt-2 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <h1 className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+          <h1 className="font-display text-4xl font-extrabold tracking-tight text-[#0E0E14] sm:text-5xl">
             FOOTWEAR CATALOG
           </h1>
-          <p className="font-mono text-xs tracking-[0.14em] text-[#8A8A8E]">
+          <p className="rounded-full bg-[#EFF4FF] px-3.5 py-1.5 font-mono text-xs font-bold tracking-[0.14em] text-[#0052FF]">
             SHOWING {filteredProducts.length} OF {PRODUCTS.length} SILHOUETTES
           </p>
         </div>
@@ -119,14 +119,14 @@ function ShopCatalogInner({
       {/* Control Bar: Search + Sort */}
       <div className="mt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div className="relative max-w-xl flex-1">
-          <Search className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[#8A8A8E]" />
+          <Search className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[#757585]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search sneakers, grippers, loafers, crocs, or SKU..."
             aria-label="Search products"
-            className="h-11 w-full rounded-sm border border-white/10 bg-[#0E0E10] pr-4 pl-10 text-sm text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+            className="h-11 w-full rounded-md border border-black/10 bg-white pr-4 pl-10 text-sm text-[#0E0E14] shadow-xs placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:outline-none"
           />
         </div>
 
@@ -135,30 +135,30 @@ function ShopCatalogInner({
             type="button"
             onClick={() => setOnlySale((v) => !v)}
             className={cn(
-              "h-11 rounded-sm border px-4 font-mono text-[11px] font-bold tracking-[0.14em] transition",
+              "h-11 rounded-md border px-4 font-mono text-[11px] font-bold tracking-[0.14em] transition",
               onlySale
-                ? "border-white bg-white text-[#050505]"
-                : "border-white/10 bg-[#0E0E10] text-[#A1A1A6] hover:border-white/30 hover:text-white"
+                ? "border-[#FF4D1C] bg-[#FF4D1C] text-white shadow-[0_6px_16px_rgba(255,77,28,0.28)]"
+                : "border-black/10 bg-white text-[#555563] hover:border-[#FF4D1C] hover:text-[#FF4D1C]"
             )}
           >
             11:11 ARCHIVE DEALS
           </button>
 
-          <div className="flex h-11 items-center gap-2 rounded-sm border border-white/10 bg-[#0E0E10] px-3">
-            <SlidersHorizontal className="h-3.5 w-3.5 text-[#8A8A8E]" />
+          <div className="flex h-11 items-center gap-2 rounded-md border border-black/10 bg-white px-3">
+            <SlidersHorizontal className="h-3.5 w-3.5 text-[#0052FF]" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
               aria-label="Sort products"
-              className="bg-transparent font-mono text-[11px] tracking-[0.12em] text-white focus:outline-none"
+              className="bg-transparent font-mono text-[11px] font-semibold tracking-[0.12em] text-[#0E0E14] focus:outline-none"
             >
-              <option value="featured" className="bg-[#0E0E10]">
+              <option value="featured" className="bg-white">
                 SORT: FEATURED
               </option>
-              <option value="price-asc" className="bg-[#0E0E10]">
+              <option value="price-asc" className="bg-white">
                 PRICE: LOW TO HIGH
               </option>
-              <option value="price-desc" className="bg-[#0E0E10]">
+              <option value="price-desc" className="bg-white">
                 PRICE: HIGH TO LOW
               </option>
             </select>
@@ -167,9 +167,9 @@ function ShopCatalogInner({
       </div>
 
       {/* Filter Rows: Gender -> Category -> SubType */}
-      <div className="mt-6 space-y-3 rounded-sm border border-white/[0.08] bg-[#0A0A0C] p-4 sm:p-5">
+      <div className="mt-6 space-y-3 rounded-xl border border-black/[0.08] bg-white p-4 shadow-xs sm:p-5">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-2 w-20 font-mono text-[10px] tracking-[0.18em] text-[#8A8A8E] uppercase">
+          <span className="mr-2 w-20 font-mono text-[10px] font-bold tracking-[0.18em] text-[#555563] uppercase">
             GENDER
           </span>
           {(
@@ -185,10 +185,14 @@ function ShopCatalogInner({
               type="button"
               onClick={() => setGender(g.key)}
               className={cn(
-                "rounded-sm border px-3.5 py-1.5 font-mono text-[11px] font-semibold tracking-[0.14em] uppercase transition",
+                "rounded-md border px-3.5 py-1.5 font-mono text-[11px] font-bold tracking-[0.14em] uppercase transition",
                 gender === g.key
-                  ? "border-white bg-white text-[#050505]"
-                  : "border-white/10 bg-[#161619] text-[#A1A1A6] hover:border-white/30 hover:text-white"
+                  ? g.key === "girls"
+                    ? "border-[#E11D74] bg-[#E11D74] text-white shadow-sm"
+                    : g.key === "boys"
+                      ? "border-[#0052FF] bg-[#0052FF] text-white shadow-sm"
+                      : "border-[#0E0E14] bg-[#0E0E14] text-white shadow-sm"
+                  : "border-black/10 bg-[#F3F4F8] text-[#555563] hover:border-black/25 hover:text-[#0E0E14]"
               )}
             >
               {g.label}
@@ -196,8 +200,8 @@ function ShopCatalogInner({
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 border-t border-white/[0.06] pt-3">
-          <span className="mr-2 w-20 font-mono text-[10px] tracking-[0.18em] text-[#8A8A8E] uppercase">
+        <div className="flex flex-wrap items-center gap-2 border-t border-black/[0.06] pt-3">
+          <span className="mr-2 w-20 font-mono text-[10px] font-bold tracking-[0.18em] text-[#555563] uppercase">
             CATEGORY
           </span>
           {(
@@ -217,10 +221,10 @@ function ShopCatalogInner({
                 setSubType("all");
               }}
               className={cn(
-                "rounded-sm border px-3.5 py-1.5 font-mono text-[11px] font-semibold tracking-[0.14em] uppercase transition",
+                "rounded-md border px-3.5 py-1.5 font-mono text-[11px] font-bold tracking-[0.14em] uppercase transition",
                 category === c.key
-                  ? "border-white bg-white text-[#050505]"
-                  : "border-white/10 bg-[#161619] text-[#A1A1A6] hover:border-white/30 hover:text-white"
+                  ? "border-[#FF4D1C] bg-[#FF4D1C] text-white shadow-sm"
+                  : "border-black/10 bg-[#F3F4F8] text-[#555563] hover:border-[#FF4D1C] hover:text-[#0E0E14]"
               )}
             >
               {c.label}
@@ -228,18 +232,18 @@ function ShopCatalogInner({
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 border-t border-white/[0.06] pt-3">
-          <span className="mr-2 w-20 font-mono text-[10px] tracking-[0.18em] text-[#8A8A8E] uppercase">
+        <div className="flex flex-wrap items-center gap-2 border-t border-black/[0.06] pt-3">
+          <span className="mr-2 w-20 font-mono text-[10px] font-bold tracking-[0.18em] text-[#555563] uppercase">
             SILHOUETTE
           </span>
           <button
             type="button"
             onClick={() => setSubType("all")}
             className={cn(
-              "rounded-sm border px-3 py-1 font-mono text-[10px] tracking-[0.14em] uppercase transition",
+              "rounded-md border px-3 py-1 font-mono text-[10px] font-bold tracking-[0.14em] uppercase transition",
               subType === "all"
-                ? "border-white bg-white font-bold text-[#050505]"
-                : "border-white/10 bg-[#161619] text-[#8A8A8E] hover:border-white/30 hover:text-white"
+                ? "border-[#0052FF] bg-[#0052FF] text-white"
+                : "border-black/10 bg-[#F3F4F8] text-[#555563] hover:border-[#0052FF] hover:text-[#0052FF]"
             )}
           >
             All Types
@@ -250,10 +254,10 @@ function ShopCatalogInner({
               type="button"
               onClick={() => setSubType(st)}
               className={cn(
-                "rounded-sm border px-3 py-1 font-mono text-[10px] tracking-[0.14em] uppercase transition",
+                "rounded-md border px-3 py-1 font-mono text-[10px] font-bold tracking-[0.14em] uppercase transition",
                 subType === st
-                  ? "border-white bg-white font-bold text-[#050505]"
-                  : "border-white/10 bg-[#161619] text-[#8A8A8E] hover:border-white/30 hover:text-white"
+                  ? "border-[#0052FF] bg-[#0052FF] text-white"
+                  : "border-black/10 bg-[#F3F4F8] text-[#555563] hover:border-[#0052FF] hover:text-[#0052FF]"
               )}
             >
               {st}
@@ -263,17 +267,17 @@ function ShopCatalogInner({
       </div>
 
       {filteredProducts.length === 0 ? (
-        <div className="mt-12 rounded-sm border border-white/10 bg-[#0E0E10] px-6 py-16 text-center">
-          <p className="font-display text-2xl font-bold text-white">
+        <div className="mt-12 rounded-xl border border-black/10 bg-white px-6 py-16 text-center shadow-xs">
+          <p className="font-display text-2xl font-bold text-[#0E0E14]">
             NO SILHOUETTES FOUND
           </p>
-          <p className="mt-2 text-sm text-[#8A8A8E]">
+          <p className="mt-2 text-sm text-[#555563]">
             Try clearing active filters or searching another footwear discipline.
           </p>
           <button
             type="button"
             onClick={resetFilters}
-            className="mt-6 inline-flex h-10 items-center gap-2 rounded-sm border border-white bg-white px-5 font-mono text-xs font-bold tracking-[0.14em] text-[#050505] transition hover:bg-[#050505] hover:text-white"
+            className="mt-6 inline-flex h-10 items-center gap-2 rounded-md bg-[#FF4D1C] px-5 font-mono text-xs font-bold tracking-[0.14em] text-white transition hover:bg-[#0E0E14]"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             RESET FILTERS

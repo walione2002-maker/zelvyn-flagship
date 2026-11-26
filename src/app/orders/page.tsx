@@ -40,25 +40,25 @@ export default function OrdersPage() {
   if (!hydrated) {
     return (
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="h-10 w-64 animate-pulse rounded-sm bg-[#161619]" />
+        <div className="h-10 w-64 animate-pulse rounded-md bg-[#E6E8F0]" />
       </div>
     );
   }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-      <div className="border-b border-white/[0.08] pb-7">
-        <p className="font-mono text-[10px] tracking-[0.26em] text-[#8A8A8E] uppercase">
+      <div className="border-b border-black/[0.08] pb-7">
+        <p className="font-mono text-[10px] font-bold tracking-[0.26em] text-[#FF4D1C] uppercase">
           LIVE DISPATCH &amp; ARCHIVE RECEIPTS
         </p>
         <div className="mt-2 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <h1 className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
+            <h1 className="font-display text-3xl font-extrabold tracking-tight text-[#0E0E14] sm:text-5xl">
               ORDER TRACKING
             </h1>
             {user && (
-              <p className="mt-2 font-mono text-xs text-[#8A8A8E]">
-                ACTIVE CLIENT: <span className="text-white">{user.fullName}</span>{" "}
+              <p className="mt-2 font-mono text-xs text-[#555563]">
+                ACTIVE CLIENT: <span className="font-bold text-[#0052FF]">{user.fullName}</span>{" "}
                 · {user.phone}
               </p>
             )}
@@ -66,21 +66,21 @@ export default function OrdersPage() {
 
           <div className="flex flex-wrap items-center gap-2.5">
             <div className="relative">
-              <Search className="pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#8A8A8E]" />
+              <Search className="pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#757585]" />
               <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search ZLV-26-XXXX..."
                 aria-label="Search order history"
-                className="h-10 rounded-sm border border-white/10 bg-[#0E0E10] pr-3 pl-9 font-mono text-xs text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                className="h-10 rounded-md border border-black/10 bg-white pr-3 pl-9 font-mono text-xs text-[#0E0E14] placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:outline-none"
               />
             </div>
             {!user && (
               <button
                 type="button"
                 onClick={() => setAuthOpen(true)}
-                className="h-10 rounded-sm border border-white/15 bg-[#0E0E10] px-4 font-mono text-[10px] tracking-[0.14em] text-white transition hover:border-white"
+                className="h-10 rounded-md border border-black/10 bg-white px-4 font-mono text-[10px] font-bold tracking-[0.14em] text-[#0E0E14] transition hover:border-[#FF4D1C] hover:text-[#FF4D1C]"
               >
                 GUEST ACCESS
               </button>
@@ -90,20 +90,20 @@ export default function OrdersPage() {
       </div>
 
       {filteredOrders.length === 0 ? (
-        <div className="mt-12 rounded-sm border border-white/10 bg-[#0E0E10] px-6 py-16 text-center">
-          <p className="font-display text-2xl font-bold text-white">
+        <div className="mt-12 rounded-xl border border-black/10 bg-white px-6 py-16 text-center shadow-xs">
+          <p className="font-display text-2xl font-bold text-[#0E0E14]">
             {orders.length === 0
               ? "NO ORDERS PLACED YET"
               : "NO MATCHING ORDERS"}
           </p>
-          <p className="mt-2 text-sm text-[#8A8A8E]">
+          <p className="mt-2 text-sm text-[#555563]">
             {orders.length === 0
               ? "Once you place an order at checkout, your live tracking timeline and printable digital receipt will appear here."
               : "Try clearing your Order ID search query."}
           </p>
           <Link
             href="/shop"
-            className="mt-6 inline-flex h-11 items-center gap-2 rounded-sm border border-white bg-white px-7 font-mono text-xs font-bold tracking-[0.16em] text-[#050505] transition hover:bg-[#050505] hover:text-white"
+            className="mt-6 inline-flex h-11 items-center gap-2 rounded-md bg-[#FF4D1C] px-7 font-mono text-xs font-bold tracking-[0.16em] text-white shadow-[0_8px_20px_rgba(255,77,28,0.28)] transition hover:bg-[#0E0E14]"
           >
             EXPLORE COLLECTION
             <ArrowRight className="h-4 w-4" />
@@ -116,40 +116,40 @@ export default function OrdersPage() {
             return (
               <div
                 key={order.orderId}
-                className="overflow-hidden rounded-sm border border-white/[0.1] bg-[#0E0E10]"
+                className="overflow-hidden rounded-xl border border-black/10 bg-white shadow-sm"
               >
                 {/* Order Summary Bar */}
-                <div className="flex flex-col justify-between gap-4 border-b border-white/[0.08] bg-[#131316] px-6 py-4 sm:flex-row sm:items-center">
+                <div className="flex flex-col justify-between gap-4 border-b border-black/[0.08] bg-[#F3F4F8] px-6 py-4 sm:flex-row sm:items-center">
                   <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                     <div>
-                      <span className="block font-mono text-[9px] tracking-[0.18em] text-[#8A8A8E]">
+                      <span className="block font-mono text-[9px] font-bold tracking-[0.18em] text-[#555563]">
                         ORDER ID
                       </span>
-                      <span className="font-mono text-sm font-bold text-white">
+                      <span className="font-mono text-sm font-bold text-[#0052FF]">
                         {order.orderId}
                       </span>
                     </div>
                     <div>
-                      <span className="block font-mono text-[9px] tracking-[0.18em] text-[#8A8A8E]">
+                      <span className="block font-mono text-[9px] font-bold tracking-[0.18em] text-[#555563]">
                         DESTINATION
                       </span>
-                      <span className="text-xs text-[#D1D1D6]">
+                      <span className="text-xs font-medium text-[#0E0E14]">
                         {order.customer.fullName} · {order.customer.city}
                       </span>
                     </div>
                     <div>
-                      <span className="block font-mono text-[9px] tracking-[0.18em] text-[#8A8A8E]">
+                      <span className="block font-mono text-[9px] font-bold tracking-[0.18em] text-[#555563]">
                         PAYMENT
                       </span>
-                      <span className="font-mono text-xs text-[#D1D1D6]">
+                      <span className="font-mono text-xs font-medium text-[#0E0E14]">
                         {order.paymentSummary}
                       </span>
                     </div>
                     <div>
-                      <span className="block font-mono text-[9px] tracking-[0.18em] text-[#8A8A8E]">
+                      <span className="block font-mono text-[9px] font-bold tracking-[0.18em] text-[#555563]">
                         TOTAL
                       </span>
-                      <span className="font-mono text-sm font-bold text-white">
+                      <span className="font-mono text-sm font-bold text-[#FF4D1C]">
                         {formatPKR(order.totalPKR)}
                       </span>
                     </div>
@@ -160,7 +160,7 @@ export default function OrdersPage() {
                       <button
                         type="button"
                         onClick={() => advanceOrderStage(order.orderId)}
-                        className="inline-flex h-9 items-center gap-1.5 rounded-sm border border-white/25 bg-[#0A0A0C] px-3 font-mono text-[10px] font-semibold tracking-[0.12em] text-white transition hover:border-white hover:bg-white hover:text-[#050505]"
+                        className="inline-flex h-9 items-center gap-1.5 rounded-md border border-[#0052FF]/25 bg-[#EFF4FF] px-3 font-mono text-[10px] font-bold tracking-[0.12em] text-[#0052FF] transition hover:bg-[#0052FF] hover:text-white"
                       >
                         <Sparkles className="h-3 w-3" />
                         ADVANCE STAGE
@@ -173,7 +173,7 @@ export default function OrdersPage() {
                           isReceiptOpen ? null : order.orderId
                         )
                       }
-                      className="inline-flex h-9 items-center gap-1.5 rounded-sm border border-white bg-white px-3.5 font-mono text-[10px] font-bold tracking-[0.14em] text-[#050505] transition hover:bg-[#050505] hover:text-white"
+                      className="inline-flex h-9 items-center gap-1.5 rounded-md bg-[#0E0E14] px-3.5 font-mono text-[10px] font-bold tracking-[0.14em] text-white transition hover:bg-[#FF4D1C]"
                     >
                       {isReceiptOpen ? "HIDE RECEIPT" : "VIEW RECEIPT"}
                     </button>
@@ -192,18 +192,18 @@ export default function OrdersPage() {
                         <div
                           key={label}
                           className={cn(
-                            "relative flex items-center gap-3 rounded-sm border p-3.5 transition",
+                            "relative flex items-center gap-3 rounded-lg border p-3.5 transition",
                             completed
-                              ? "border-white/25 bg-[#161619]"
-                              : "border-white/[0.06] bg-[#0A0A0C] opacity-55"
+                              ? "border-[#059669]/30 bg-[#ECFDF5]"
+                              : "border-black/[0.06] bg-[#F6F7FA] opacity-60"
                           )}
                         >
                           <div
                             className={cn(
-                              "flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border",
+                              "flex h-9 w-9 shrink-0 items-center justify-center rounded-md border",
                               completed
-                                ? "border-white bg-white text-[#050505]"
-                                : "border-white/15 bg-[#0E0E10] text-[#8A8A8E]"
+                                ? "border-[#059669] bg-[#059669] text-white"
+                                : "border-black/10 bg-white text-[#757585]"
                             )}
                           >
                             {completed && !current ? (
@@ -213,11 +213,11 @@ export default function OrdersPage() {
                             )}
                           </div>
                           <div>
-                            <span className="block font-mono text-[9px] tracking-[0.18em] text-[#8A8A8E]">
+                            <span className="block font-mono text-[9px] font-bold tracking-[0.18em] text-[#555563]">
                               0{idx + 1}
                               {current ? " · ACTIVE" : ""}
                             </span>
-                            <span className="font-mono text-[11px] font-bold text-white">
+                            <span className="font-mono text-[11px] font-bold text-[#0E0E14]">
                               {label}
                             </span>
                           </div>
@@ -227,23 +227,23 @@ export default function OrdersPage() {
                   </div>
 
                   {/* Items Strip */}
-                  <div className="mt-5 flex flex-wrap gap-3 border-t border-white/[0.06] pt-4">
+                  <div className="mt-5 flex flex-wrap gap-3 border-t border-black/[0.06] pt-4">
                     {order.items.map((item) => (
                       <Link
                         key={`${item.productId}-${item.size}-${item.color}`}
                         href={`/product/${item.slug}`}
-                        className="flex items-center gap-3 rounded-sm border border-white/[0.08] bg-[#0A0A0C] p-2 pr-4 transition hover:border-white/30"
+                        className="flex items-center gap-3 rounded-lg border border-black/10 bg-[#F6F7FA] p-2 pr-4 transition hover:border-[#FF4D1C]"
                       >
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="h-12 w-12 rounded-sm object-cover"
+                          className="h-12 w-12 rounded-md object-cover"
                         />
                         <div>
-                          <p className="font-display text-xs font-bold text-white">
+                          <p className="font-display text-xs font-bold text-[#0E0E14]">
                             {item.name}
                           </p>
-                          <p className="font-mono text-[10px] text-[#8A8A8E]">
+                          <p className="font-mono text-[10px] text-[#555563]">
                             EU {item.size} · {item.color} · x{item.quantity}
                           </p>
                         </div>
@@ -254,7 +254,7 @@ export default function OrdersPage() {
 
                 {/* Expandable Printable Digital Receipt */}
                 {isReceiptOpen && (
-                  <div className="border-t border-white/10 bg-[#050505] p-6">
+                  <div className="border-t border-black/[0.08] bg-[#FAFAFC] p-6">
                     <ReceiptView order={order} />
                   </div>
                 )}

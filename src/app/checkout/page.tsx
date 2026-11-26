@@ -39,7 +39,7 @@ export default function CheckoutPage() {
   if (!hydrated) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="h-10 w-60 animate-pulse rounded-sm bg-[#161619]" />
+        <div className="h-10 w-60 animate-pulse rounded-md bg-[#E6E8F0]" />
       </div>
     );
   }
@@ -237,39 +237,39 @@ function CheckoutFlow() {
   if (confirmedOrder) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <div className="mb-8 rounded-sm border border-white/20 bg-[#0E0E10] p-6 sm:p-8">
+        <div className="mb-8 rounded-xl border border-[#059669]/25 bg-[#ECFDF5] p-6 shadow-sm sm:p-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-white text-[#050505]">
+            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#059669] text-white shadow-sm">
               <CheckCircle2 className="h-6 w-6" />
             </div>
             <div>
-              <p className="font-mono text-[10px] tracking-[0.24em] text-[#8A8A8E] uppercase">
+              <p className="font-mono text-[10px] font-bold tracking-[0.24em] text-[#059669] uppercase">
                 ORDER CONFIRMED · KEEPIN&apos; IT REAL
               </p>
-              <h1 className="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+              <h1 className="font-display text-2xl font-extrabold tracking-tight text-[#0E0E14] sm:text-3xl">
                 THANK YOU, {confirmedOrder.customer.fullName.toUpperCase()}
               </h1>
             </div>
           </div>
-          <p className="mt-4 text-sm text-[#A1A1A6]">
+          <p className="mt-4 text-sm text-[#3F3F4E]">
             Your order{" "}
-            <strong className="font-mono text-white">
+            <strong className="font-mono text-[#0052FF]">
               {confirmedOrder.orderId}
             </strong>{" "}
-            is locked in and queued for matte-box packing. Track live dispatch
-            updates anytime on your Orders page.
+            is locked in and queued for collector-box packing. Track live
+            dispatch updates anytime on your Orders page.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Link
               href="/orders"
-              className="inline-flex h-11 items-center gap-2 rounded-sm border border-white bg-white px-6 font-mono text-xs font-bold tracking-[0.16em] text-[#050505] transition hover:bg-[#050505] hover:text-white"
+              className="inline-flex h-11 items-center gap-2 rounded-md bg-[#FF4D1C] px-6 font-mono text-xs font-bold tracking-[0.16em] text-white shadow-[0_8px_20px_rgba(255,77,28,0.28)] transition hover:bg-[#0E0E14]"
             >
               TRACK ORDER LIVE
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/shop"
-              className="inline-flex h-11 items-center gap-2 rounded-sm border border-white/20 bg-[#161619] px-6 font-mono text-xs font-bold tracking-[0.16em] text-white transition hover:border-white"
+              className="inline-flex h-11 items-center gap-2 rounded-md border border-black/15 bg-white px-6 font-mono text-xs font-bold tracking-[0.16em] text-[#0E0E14] transition hover:border-[#0052FF] hover:text-[#0052FF]"
             >
               CONTINUE SHOPPING
             </Link>
@@ -285,18 +285,18 @@ function CheckoutFlow() {
   if (cart.length === 0) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
-        <p className="font-mono text-[10px] tracking-[0.26em] text-[#8A8A8E] uppercase">
+        <p className="font-mono text-[10px] font-bold tracking-[0.26em] text-[#FF4D1C] uppercase">
           CHECKOUT
         </p>
-        <h1 className="mt-2 font-display text-3xl font-extrabold text-white sm:text-4xl">
+        <h1 className="mt-2 font-display text-3xl font-extrabold text-[#0E0E14] sm:text-4xl">
           YOUR BAG IS EMPTY
         </h1>
-        <p className="mt-3 text-sm text-[#8A8A8E]">
+        <p className="mt-3 text-sm text-[#555563]">
           Add a silhouette from the Season 01 collection before checking out.
         </p>
         <Link
           href="/shop"
-          className="mt-7 inline-flex h-11 items-center gap-2 rounded-sm border border-white bg-white px-7 font-mono text-xs font-bold tracking-[0.16em] text-[#050505] transition hover:bg-[#050505] hover:text-white"
+          className="mt-7 inline-flex h-11 items-center gap-2 rounded-md bg-[#FF4D1C] px-7 font-mono text-xs font-bold tracking-[0.16em] text-white shadow-[0_8px_20px_rgba(255,77,28,0.28)] transition hover:bg-[#0E0E14]"
         >
           GO TO CATALOG
           <ArrowRight className="h-4 w-4" />
@@ -316,28 +316,28 @@ function CheckoutFlow() {
     <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       {/* Processing Overlay */}
       {processing && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/85 backdrop-blur-md">
-          <div className="h-12 w-12 animate-spin rounded-full border-2 border-white/20 border-t-white" />
-          <p className="mt-5 font-mono text-xs tracking-[0.24em] text-white uppercase">
-            AUTHORIZING ORDER &amp; SECURING MATTE BOX...
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/85 backdrop-blur-md">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#FF4D1C]/20 border-t-[#FF4D1C]" />
+          <p className="mt-5 font-mono text-xs font-bold tracking-[0.24em] text-[#0E0E14] uppercase">
+            AUTHORIZING ORDER &amp; SECURING COLLECTOR BOX...
           </p>
         </div>
       )}
 
-      <div className="border-b border-white/[0.08] pb-6">
-        <p className="font-mono text-[10px] tracking-[0.26em] text-[#8A8A8E] uppercase">
+      <div className="border-b border-black/[0.08] pb-6">
+        <p className="font-mono text-[10px] font-bold tracking-[0.26em] text-[#FF4D1C] uppercase">
           ENCRYPTED CLIENT CHECKOUT
         </p>
         <div className="mt-2 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
+          <h1 className="font-display text-3xl font-extrabold tracking-tight text-[#0E0E14] sm:text-5xl">
             CHECKOUT
           </h1>
           <button
             type="button"
             onClick={() => setAuthOpen(true)}
-            className="inline-flex w-fit items-center gap-2 rounded-sm border border-white/15 bg-[#0E0E10] px-3.5 py-2 font-mono text-[10px] tracking-[0.16em] text-white transition hover:border-white/40"
+            className="inline-flex w-fit items-center gap-2 rounded-md border border-black/10 bg-white px-3.5 py-2 font-mono text-[10px] font-bold tracking-[0.16em] text-[#0E0E14] shadow-xs transition hover:border-[#0052FF] hover:text-[#0052FF]"
           >
-            <UserCheck className="h-3.5 w-3.5" />
+            <UserCheck className="h-3.5 w-3.5 text-[#0052FF]" />
             {user
               ? `SESSION: ${user.fullName.toUpperCase()}`
               : "GUEST LOGIN / SIGN IN"}
@@ -352,18 +352,18 @@ function CheckoutFlow() {
         {/* LEFT COLUMN: STEP 1 + STEP 2 */}
         <div className="space-y-8 lg:col-span-7">
           {/* STEP 1 — CONTACT & SHIPPING */}
-          <section className="rounded-sm border border-white/[0.08] bg-[#0E0E10] p-6 sm:p-7">
-            <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+          <section className="rounded-xl border border-black/10 bg-white p-6 shadow-xs sm:p-7">
+            <div className="flex items-center justify-between border-b border-black/[0.08] pb-4">
               <div>
-                <span className="font-mono text-[10px] tracking-[0.2em] text-[#8A8A8E]">
+                <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-[#FF4D1C]">
                   STEP 01
                 </span>
-                <h2 className="font-display text-xl font-bold text-white">
+                <h2 className="font-display text-xl font-bold text-[#0E0E14]">
                   CONTACT &amp; DELIVERY DETAILS
                 </h2>
               </div>
               {user && (
-                <span className="rounded-sm border border-white/15 bg-[#161619] px-2.5 py-1 font-mono text-[9px] tracking-[0.16em] text-white">
+                <span className="rounded-md border border-[#059669]/25 bg-[#ECFDF5] px-2.5 py-1 font-mono text-[9px] font-bold tracking-[0.16em] text-[#059669]">
                   PRE-FILLED FROM SESSION
                 </span>
               )}
@@ -371,7 +371,7 @@ function CheckoutFlow() {
 
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="sm:col-span-2">
-                <label className="mb-1.5 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                <label className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                   Full Name *
                 </label>
                 <input
@@ -380,12 +380,12 @@ function CheckoutFlow() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Bilal Ahmed"
-                  className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 text-sm text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                  className="h-11 w-full rounded-md border border-black/10 bg-[#F6F7FA] px-3.5 text-sm text-[#0E0E14] placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:bg-white focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="mb-1.5 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                <label className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                   Email Address *
                 </label>
                 <input
@@ -394,12 +394,12 @@ function CheckoutFlow() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="bilal@zelvyn.pk"
-                  className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 text-sm text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                  className="h-11 w-full rounded-md border border-black/10 bg-[#F6F7FA] px-3.5 text-sm text-[#0E0E14] placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:bg-white focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="mb-1.5 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                <label className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                   Mobile Number (+92 / 03XX) *
                 </label>
                 <input
@@ -408,12 +408,12 @@ function CheckoutFlow() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="0300-1234567"
-                  className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 font-mono text-sm text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                  className="h-11 w-full rounded-md border border-black/10 bg-[#F6F7FA] px-3.5 font-mono text-sm text-[#0E0E14] placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:bg-white focus:outline-none"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="mb-1.5 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                <label className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                   Street Address *
                 </label>
                 <input
@@ -422,22 +422,22 @@ function CheckoutFlow() {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="House 14-B, Street 7, DHA Phase 6"
-                  className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 text-sm text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                  className="h-11 w-full rounded-md border border-black/10 bg-[#F6F7FA] px-3.5 text-sm text-[#0E0E14] placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:bg-white focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="mb-1.5 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                <label className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                   City *
                 </label>
                 <select
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   aria-label="Delivery city"
-                  className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 text-sm text-white focus:border-white/40 focus:outline-none"
+                  className="h-11 w-full rounded-md border border-black/10 bg-[#F6F7FA] px-3.5 text-sm text-[#0E0E14] focus:border-[#FF4D1C] focus:bg-white focus:outline-none"
                 >
                   {PAKISTAN_CITIES.map((c) => (
-                    <option key={c} value={c} className="bg-[#0E0E10]">
+                    <option key={c} value={c} className="bg-white">
                       {c}
                     </option>
                   ))}
@@ -445,7 +445,7 @@ function CheckoutFlow() {
               </div>
 
               <div>
-                <label className="mb-1.5 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                <label className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                   Courier Note (Optional)
                 </label>
                 <input
@@ -453,19 +453,19 @@ function CheckoutFlow() {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Call before arrival"
-                  className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 text-sm text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                  className="h-11 w-full rounded-md border border-black/10 bg-[#F6F7FA] px-3.5 text-sm text-[#0E0E14] placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:bg-white focus:outline-none"
                 />
               </div>
             </div>
           </section>
 
           {/* STEP 2 — 4 PAYMENT METHODS */}
-          <section className="rounded-sm border border-white/[0.08] bg-[#0E0E10] p-6 sm:p-7">
-            <div className="border-b border-white/[0.08] pb-4">
-              <span className="font-mono text-[10px] tracking-[0.2em] text-[#8A8A8E]">
+          <section className="rounded-xl border border-black/10 bg-white p-6 shadow-xs sm:p-7">
+            <div className="border-b border-black/[0.08] pb-4">
+              <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-[#0052FF]">
                 STEP 02
               </span>
-              <h2 className="font-display text-xl font-bold text-white">
+              <h2 className="font-display text-xl font-bold text-[#0E0E14]">
                 SELECT PAYMENT METHOD
               </h2>
             </div>
@@ -510,10 +510,10 @@ function CheckoutFlow() {
                       setFormError(null);
                     }}
                     className={cn(
-                      "flex flex-col items-start rounded-sm border p-3.5 text-left transition",
+                      "flex flex-col items-start rounded-lg border p-3.5 text-left transition",
                       active
-                        ? "border-white bg-white text-[#050505]"
-                        : "border-white/10 bg-[#161619] text-[#D1D1D6] hover:border-white/35"
+                        ? "border-[#FF4D1C] bg-[#FF4D1C] text-white shadow-[0_8px_20px_rgba(255,77,28,0.25)]"
+                        : "border-black/10 bg-[#F6F7FA] text-[#0E0E14] hover:border-[#FF4D1C]"
                     )}
                   >
                     <m.icon className="h-4 w-4" />
@@ -523,7 +523,7 @@ function CheckoutFlow() {
                     <span
                       className={cn(
                         "mt-0.5 text-[10px]",
-                        active ? "text-[#050505]/80" : "text-[#8A8A8E]"
+                        active ? "text-white/90" : "text-[#555563]"
                       )}
                     >
                       {m.sub}
@@ -534,23 +534,23 @@ function CheckoutFlow() {
             </div>
 
             {/* PAYMENT METHOD DETAILS */}
-            <div className="mt-6 rounded-sm border border-white/10 bg-[#0A0A0C] p-5">
+            <div className="mt-6 rounded-lg border border-black/[0.08] bg-[#F6F7FA] p-5">
               {/* 1. CASH ON DELIVERY */}
               {paymentMethod === "cod" && (
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-bold tracking-[0.14em] text-white">
+                    <span className="font-mono text-xs font-bold tracking-[0.14em] text-[#0E0E14]">
                       CASH ON DELIVERY (NATIONWIDE)
                     </span>
-                    <span className="rounded-sm bg-white px-2 py-0.5 font-mono text-[10px] font-bold text-[#050505]">
+                    <span className="rounded-md bg-[#059669] px-2.5 py-0.5 font-mono text-[10px] font-bold text-white">
                       RS. 0 EXTRA FEE
                     </span>
                   </div>
-                  <p className="text-xs leading-relaxed text-[#A1A1A6]">
+                  <p className="text-xs leading-relaxed text-[#555563]">
                     Pay in cash directly to our courier rider when your sealed
-                    ZELVYN matte box arrives at your doorstep. Our dispatch desk
-                    will confirm via SMS/call on{" "}
-                    <span className="font-mono text-white">
+                    ZELVYN collector box arrives at your doorstep. Our dispatch
+                    desk will confirm via SMS/call on{" "}
+                    <span className="font-mono font-semibold text-[#0E0E14]">
                       {phone || "your phone number"}
                     </span>
                     .
@@ -561,13 +561,13 @@ function CheckoutFlow() {
               {/* 2. CREDIT / DEBIT CARD WITH LIVE VIRTUAL CARD PREVIEW */}
               {paymentMethod === "card" && (
                 <div className="space-y-5">
-                  {/* Interactive Dark Monochrome Virtual Card */}
-                  <div className="relative mx-auto max-w-sm overflow-hidden rounded-md border border-white/20 bg-gradient-to-br from-[#1C1C20] via-[#0E0E10] to-[#050505] p-5 shadow-2xl">
+                  {/* Interactive Vibrant Gradient Virtual Card */}
+                  <div className="relative mx-auto max-w-sm overflow-hidden rounded-xl bg-gradient-to-br from-[#FF4D1C] via-[#E11D74] to-[#0052FF] p-5 text-white shadow-xl">
                     <div className="flex items-center justify-between">
                       <span className="font-display text-sm font-extrabold tracking-[-0.04em] text-white">
                         ZELVYN
                       </span>
-                      <span className="font-mono text-[11px] font-bold tracking-[0.2em] text-[#D1D1D6]">
+                      <span className="font-mono text-[11px] font-bold tracking-[0.2em] text-white/90">
                         {cardBrandLabel}
                       </span>
                     </div>
@@ -575,24 +575,24 @@ function CheckoutFlow() {
                     {!cardFlipped ? (
                       <>
                         {/* EMV Chip */}
-                        <div className="mt-5 h-7 w-10 rounded-sm border border-white/25 bg-gradient-to-br from-[#3A3A40] to-[#1A1A1E]" />
+                        <div className="mt-5 h-7 w-10 rounded border border-white/40 bg-gradient-to-br from-amber-200 to-amber-400" />
                         <p className="mt-4 font-mono text-lg tracking-[0.22em] text-white">
                           {cardNumber || "•••• •••• •••• ••••"}
                         </p>
                         <div className="mt-5 flex items-end justify-between font-mono text-[10px] tracking-[0.16em]">
                           <div>
-                            <span className="block text-[8px] text-[#8A8A8E]">
+                            <span className="block text-[8px] text-white/75">
                               CARDHOLDER
                             </span>
-                            <span className="text-white uppercase">
+                            <span className="font-bold text-white uppercase">
                               {cardName || "YOUR NAME"}
                             </span>
                           </div>
                           <div className="text-right">
-                            <span className="block text-[8px] text-[#8A8A8E]">
+                            <span className="block text-[8px] text-white/75">
                               EXPIRES
                             </span>
-                            <span className="text-white">
+                            <span className="font-bold text-white">
                               {cardExpiry || "MM/YY"}
                             </span>
                           </div>
@@ -600,9 +600,9 @@ function CheckoutFlow() {
                       </>
                     ) : (
                       <div className="py-5">
-                        <div className="h-8 w-full bg-black/80" />
-                        <div className="mt-4 flex items-center justify-between bg-white/10 px-3 py-2 font-mono text-xs">
-                          <span className="text-[#8A8A8E]">SECURITY CVV</span>
+                        <div className="h-8 w-full bg-black/50" />
+                        <div className="mt-4 flex items-center justify-between rounded bg-white/20 px-3 py-2 font-mono text-xs backdrop-blur-md">
+                          <span className="text-white/90">SECURITY CVV</span>
                           <span className="font-bold tracking-[0.25em] text-white">
                             {cardCvv || "•••"}
                           </span>
@@ -614,7 +614,7 @@ function CheckoutFlow() {
                   {/* Card Form Inputs */}
                   <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
                     <div className="sm:col-span-2">
-                      <label className="mb-1 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                      <label className="mb-1 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                         Card Number
                       </label>
                       <input
@@ -624,11 +624,11 @@ function CheckoutFlow() {
                         onFocus={() => setCardFlipped(false)}
                         onChange={(e) => handleCardNumberChange(e.target.value)}
                         placeholder="4242 4242 4242 4242"
-                        className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 font-mono text-sm text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                        className="h-11 w-full rounded-md border border-black/10 bg-white px-3.5 font-mono text-sm text-[#0E0E14] placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:outline-none"
                       />
                     </div>
                     <div className="sm:col-span-2">
-                      <label className="mb-1 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                      <label className="mb-1 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                         Cardholder Name
                       </label>
                       <input
@@ -637,11 +637,11 @@ function CheckoutFlow() {
                         onFocus={() => setCardFlipped(false)}
                         onChange={(e) => setCardName(e.target.value)}
                         placeholder="BILAL AHMED"
-                        className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 text-sm text-white uppercase placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                        className="h-11 w-full rounded-md border border-black/10 bg-white px-3.5 text-sm text-[#0E0E14] uppercase placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="mb-1 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                      <label className="mb-1 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                         Expiry (MM/YY)
                       </label>
                       <input
@@ -651,11 +651,11 @@ function CheckoutFlow() {
                         onFocus={() => setCardFlipped(false)}
                         onChange={(e) => handleExpiryChange(e.target.value)}
                         placeholder="08/29"
-                        className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 font-mono text-sm text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                        className="h-11 w-full rounded-md border border-black/10 bg-white px-3.5 font-mono text-sm text-[#0E0E14] placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="mb-1 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                      <label className="mb-1 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                         CVV
                       </label>
                       <input
@@ -669,7 +669,7 @@ function CheckoutFlow() {
                           setCardCvv(e.target.value.replace(/\D/g, "").slice(0, 4))
                         }
                         placeholder="123"
-                        className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 font-mono text-sm text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                        className="h-11 w-full rounded-md border border-black/10 bg-white px-3.5 font-mono text-sm text-[#0E0E14] placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -689,10 +689,12 @@ function CheckoutFlow() {
                           setWalletPromptState("idle");
                         }}
                         className={cn(
-                          "rounded-sm border py-2.5 font-mono text-xs font-bold tracking-[0.14em] transition",
+                          "rounded-md border py-2.5 font-mono text-xs font-bold tracking-[0.14em] transition",
                           walletProvider === provider
-                            ? "border-white bg-white text-[#050505]"
-                            : "border-white/10 bg-[#161619] text-[#A1A1A6] hover:border-white/30"
+                            ? provider === "Easypaisa"
+                              ? "border-[#059669] bg-[#059669] text-white shadow-sm"
+                              : "border-[#DC2626] bg-[#DC2626] text-white shadow-sm"
+                            : "border-black/10 bg-white text-[#555563] hover:border-black/30"
                         )}
                       >
                         {provider.toUpperCase()}
@@ -701,7 +703,7 @@ function CheckoutFlow() {
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                    <label className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                       11-Digit {walletProvider} Account Number
                     </label>
                     <div className="flex flex-col gap-2 sm:flex-row">
@@ -713,13 +715,13 @@ function CheckoutFlow() {
                           setWalletPromptState("idle");
                         }}
                         placeholder="03001234567"
-                        className="h-11 flex-1 rounded-sm border border-white/10 bg-[#161619] px-3.5 font-mono text-sm text-white placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                        className="h-11 flex-1 rounded-md border border-black/10 bg-white px-3.5 font-mono text-sm text-[#0E0E14] placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:outline-none"
                       />
                       <button
                         type="button"
                         onClick={handleSendWalletPrompt}
                         disabled={walletPromptState === "sending"}
-                        className="h-11 rounded-sm border border-white/25 bg-[#161619] px-4 font-mono text-[10px] font-bold tracking-[0.14em] text-white transition hover:border-white hover:bg-white hover:text-[#050505] disabled:opacity-50"
+                        className="h-11 rounded-md bg-[#0E0E14] px-4 font-mono text-[10px] font-bold tracking-[0.14em] text-white transition hover:bg-[#0052FF] disabled:opacity-50"
                       >
                         {walletPromptState === "sending"
                           ? "SENDING PROMPT..."
@@ -731,7 +733,7 @@ function CheckoutFlow() {
                   </div>
 
                   {walletPromptState === "sent" && (
-                    <div className="flex items-center gap-2 rounded-sm border border-white/20 bg-white/[0.04] px-3.5 py-2.5 font-mono text-[11px] text-white">
+                    <div className="flex items-center gap-2 rounded-md border border-[#059669]/30 bg-[#ECFDF5] px-3.5 py-2.5 font-mono text-[11px] font-semibold text-[#059669]">
                       <CheckCircle2 className="h-4 w-4 shrink-0" />
                       <span>
                         MPIN push notification queued on {walletNumber}. Click
@@ -745,34 +747,34 @@ function CheckoutFlow() {
               {/* 4. BANK TRANSFER */}
               {paymentMethod === "bank" && (
                 <div className="space-y-4">
-                  <div className="rounded-sm border border-white/10 bg-[#161619] p-4 font-mono text-xs">
+                  <div className="rounded-lg border border-black/10 bg-white p-4 font-mono text-xs">
                     <div className="flex justify-between py-1">
-                      <span className="text-[#8A8A8E]">BANK</span>
-                      <span className="text-white">{BANK_DETAILS.bankName}</span>
+                      <span className="text-[#555563]">BANK</span>
+                      <span className="font-semibold text-[#0E0E14]">{BANK_DETAILS.bankName}</span>
                     </div>
                     <div className="flex justify-between py-1">
-                      <span className="text-[#8A8A8E]">ACCOUNT TITLE</span>
-                      <span className="text-white">
+                      <span className="text-[#555563]">ACCOUNT TITLE</span>
+                      <span className="font-semibold text-[#0E0E14]">
                         {BANK_DETAILS.accountTitle}
                       </span>
                     </div>
                     <div className="flex justify-between py-1">
-                      <span className="text-[#8A8A8E]">ACCOUNT NO</span>
-                      <span className="text-white">{BANK_DETAILS.accountNo}</span>
+                      <span className="text-[#555563]">ACCOUNT NO</span>
+                      <span className="font-semibold text-[#0E0E14]">{BANK_DETAILS.accountNo}</span>
                     </div>
-                    <div className="mt-2 flex flex-col justify-between gap-2 border-t border-white/10 pt-3 sm:flex-row sm:items-center">
+                    <div className="mt-2 flex flex-col justify-between gap-2 border-t border-black/[0.08] pt-3 sm:flex-row sm:items-center">
                       <div>
-                        <span className="block text-[9px] text-[#8A8A8E]">
+                        <span className="block text-[9px] text-[#555563]">
                           IBAN
                         </span>
-                        <span className="font-bold text-white">
+                        <span className="font-bold text-[#0052FF]">
                           {BANK_DETAILS.iban}
                         </span>
                       </div>
                       <button
                         type="button"
                         onClick={handleCopyIban}
-                        className="inline-flex h-9 items-center gap-1.5 rounded-sm border border-white bg-white px-3 font-mono text-[10px] font-bold tracking-[0.14em] text-[#050505] transition hover:bg-[#050505] hover:text-white"
+                        className="inline-flex h-9 items-center gap-1.5 rounded-md bg-[#0052FF] px-3 font-mono text-[10px] font-bold tracking-[0.14em] text-white transition hover:bg-[#0E0E14]"
                       >
                         {ibanCopied ? (
                           <>
@@ -790,7 +792,7 @@ function CheckoutFlow() {
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E] uppercase">
+                    <label className="mb-1.5 block font-mono text-[10px] font-semibold tracking-[0.16em] text-[#555563] uppercase">
                       Transaction Reference / STAN ID *
                     </label>
                     <input
@@ -798,7 +800,7 @@ function CheckoutFlow() {
                       value={bankRefId}
                       onChange={(e) => setBankRefId(e.target.value)}
                       placeholder="e.g. IBFT-948271"
-                      className="h-11 w-full rounded-sm border border-white/10 bg-[#161619] px-3.5 font-mono text-sm text-white uppercase placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                      className="h-11 w-full rounded-md border border-black/10 bg-white px-3.5 font-mono text-sm text-[#0E0E14] uppercase placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:outline-none"
                     />
                   </div>
                 </div>
@@ -809,12 +811,12 @@ function CheckoutFlow() {
 
         {/* RIGHT COLUMN: STICKY ORDER SUMMARY */}
         <aside className="lg:col-span-5">
-          <div className="sticky top-28 rounded-sm border border-white/[0.08] bg-[#0E0E10] p-6 sm:p-7">
-            <h2 className="border-b border-white/[0.08] pb-4 font-display text-xl font-bold text-white">
+          <div className="sticky top-28 rounded-xl border border-black/10 bg-white p-6 shadow-sm sm:p-7">
+            <h2 className="border-b border-black/[0.08] pb-4 font-display text-xl font-bold text-[#0E0E14]">
               ORDER SUMMARY
             </h2>
 
-            <div className="mt-4 max-h-72 divide-y divide-white/[0.07] overflow-y-auto pr-1">
+            <div className="mt-4 max-h-72 divide-y divide-black/[0.06] overflow-y-auto pr-1">
               {cart.map((item) => (
                 <div
                   key={`${item.productId}-${item.size}-${item.color}`}
@@ -823,17 +825,17 @@ function CheckoutFlow() {
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="h-16 w-14 rounded-sm border border-white/10 object-cover"
+                    className="h-16 w-14 rounded-md border border-black/10 bg-[#F3F4F8] object-cover"
                   />
                   <div className="flex-1">
-                    <p className="font-display text-sm font-bold text-white">
+                    <p className="font-display text-sm font-bold text-[#0E0E14]">
                       {item.name}
                     </p>
-                    <p className="font-mono text-[10px] text-[#8A8A8E]">
+                    <p className="font-mono text-[10px] text-[#555563]">
                       EU {item.size} · {item.color} · x{item.quantity}
                     </p>
                   </div>
-                  <span className="font-mono text-xs font-semibold text-white">
+                  <span className="font-mono text-xs font-bold text-[#0E0E14]">
                     {formatPKR(item.pricePKR * item.quantity)}
                   </span>
                 </div>
@@ -841,16 +843,16 @@ function CheckoutFlow() {
             </div>
 
             {/* Inline Promo Input */}
-            <div className="mt-4 border-t border-white/[0.08] pt-4">
+            <div className="mt-4 border-t border-black/[0.08] pt-4">
               <div className="flex gap-2">
                 <div className="relative flex-1">
-                  <Tag className="pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#8A8A8E]" />
+                  <Tag className="pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#757585]" />
                   <input
                     type="text"
                     value={promoInput}
                     onChange={(e) => setPromoInput(e.target.value)}
                     placeholder="REAL10 or ZELVYN50"
-                    className="h-10 w-full rounded-sm border border-white/10 bg-[#161619] pr-3 pl-9 font-mono text-[11px] text-white uppercase placeholder:text-[#5C5C62] focus:border-white/40 focus:outline-none"
+                    className="h-10 w-full rounded-md border border-black/10 bg-[#F6F7FA] pr-3 pl-9 font-mono text-[11px] text-[#0E0E14] uppercase placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:bg-white focus:outline-none"
                   />
                 </div>
                 <button
@@ -860,44 +862,44 @@ function CheckoutFlow() {
                     setPromoMsg(res.message);
                     if (res.ok) setPromoInput("");
                   }}
-                  className="h-10 rounded-sm border border-white/20 bg-[#161619] px-4 font-mono text-[10px] font-bold tracking-[0.14em] text-white transition hover:border-white hover:bg-white hover:text-[#050505]"
+                  className="h-10 rounded-md bg-[#0E0E14] px-4 font-mono text-[10px] font-bold tracking-[0.14em] text-white transition hover:bg-[#0052FF]"
                 >
                   APPLY
                 </button>
               </div>
               {promoMsg && (
-                <p className="mt-1.5 font-mono text-[10px] text-[#A1A1A6]">
+                <p className="mt-1.5 font-mono text-[10px] font-medium text-[#059669]">
                   {promoMsg}
                 </p>
               )}
             </div>
 
             {/* Totals */}
-            <div className="mt-4 space-y-2 border-t border-white/[0.08] pt-4 font-mono text-xs">
-              <div className="flex justify-between text-[#8A8A8E]">
+            <div className="mt-4 space-y-2 border-t border-black/[0.08] pt-4 font-mono text-xs">
+              <div className="flex justify-between text-[#555563]">
                 <span>SUBTOTAL</span>
-                <span className="text-white">{formatPKR(subtotalPKR)}</span>
+                <span className="font-semibold text-[#0E0E14]">{formatPKR(subtotalPKR)}</span>
               </div>
               {discountPKR > 0 && (
-                <div className="flex justify-between text-[#D1D1D6]">
+                <div className="flex justify-between font-semibold text-[#059669]">
                   <span>PROMO ({promoCode})</span>
                   <span>−{formatPKR(discountPKR)}</span>
                 </div>
               )}
-              <div className="flex justify-between text-[#8A8A8E]">
+              <div className="flex justify-between text-[#555563]">
                 <span>DELIVERY</span>
-                <span className="text-white">
+                <span className="font-semibold text-[#0E0E14]">
                   {shippingPKR === 0 ? "FREE" : formatPKR(shippingPKR)}
                 </span>
               </div>
-              <div className="flex justify-between border-t border-white/10 pt-3 text-base font-bold text-white">
+              <div className="flex justify-between border-t border-black/[0.08] pt-3 text-base font-bold text-[#0E0E14]">
                 <span>TOTAL PAYABLE</span>
-                <span>{formatPKR(totalPKR)}</span>
+                <span className="text-[#FF4D1C]">{formatPKR(totalPKR)}</span>
               </div>
             </div>
 
             {formError && (
-              <div className="mt-4 rounded-sm border border-white/25 bg-white/[0.06] px-3.5 py-2.5 font-mono text-[11px] text-white">
+              <div className="mt-4 rounded-md border border-[#E11D74]/30 bg-[#FFF1F5] px-3.5 py-2.5 font-mono text-[11px] font-medium text-[#E11D74]">
                 {formError}
               </div>
             )}
@@ -905,14 +907,14 @@ function CheckoutFlow() {
             <button
               type="submit"
               disabled={processing}
-              className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-sm border border-white bg-white font-mono text-xs font-bold tracking-[0.18em] text-[#050505] transition hover:bg-[#050505] hover:text-white disabled:opacity-50"
+              className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#FF4D1C] font-mono text-xs font-bold tracking-[0.18em] text-white shadow-[0_10px_24px_rgba(255,77,28,0.3)] transition hover:bg-[#0E0E14] disabled:opacity-50"
             >
               <Lock className="h-3.5 w-3.5" />
               PLACE ORDER · {formatPKR(totalPKR)}
             </button>
 
-            <p className="mt-3 flex items-center justify-center gap-1.5 font-mono text-[10px] text-[#8A8A8E]">
-              <ShieldCheck className="h-3.5 w-3.5" />
+            <p className="mt-3 flex items-center justify-center gap-1.5 font-mono text-[10px] text-[#555563]">
+              <ShieldCheck className="h-3.5 w-3.5 text-[#059669]" />
               PERSISTED LOCALLY · STATIC EXPORT READY
             </p>
           </div>

@@ -20,19 +20,18 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
 
   return (
     <article
-      className="group relative flex flex-col overflow-hidden rounded-sm border border-white/[0.08] bg-[#0E0E10] transition-colors duration-300 hover:border-[#2A2A2E]"
+      className="group relative flex flex-col overflow-hidden rounded-lg border border-black/[0.08] bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[#FF4D1C]/40 hover:shadow-[0_18px_40px_-14px_rgba(255,77,28,0.2)]"
       onMouseLeave={() => setShowSizes(false)}
     >
       {/* Visual Frame */}
-      <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#09090B]">
+      <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#F3F4F8]">
         <Link href={`/product/${product.slug}`} className="block h-full w-full">
           <img
             src={product.image}
             alt={product.name}
             className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
-          {/* Subtle studio lighting sheen on hover */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505]/80 via-transparent to-white/[0.04] opacity-70 transition-opacity duration-500 group-hover:opacity-100" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-white/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         </Link>
 
         {/* Top Badges & Controls */}
@@ -41,16 +40,20 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
             {product.badge && (
               <span
                 className={cn(
-                  "inline-block rounded-sm px-2 py-0.5 font-mono text-[9px] font-bold tracking-[0.16em] uppercase",
+                  "inline-block rounded-md px-2 py-0.5 font-mono text-[9px] font-bold tracking-[0.16em] text-white uppercase shadow-sm",
                   product.badge === "50% OFF"
-                    ? "bg-white text-[#050505]"
-                    : "border border-white/20 bg-black/80 text-white backdrop-blur-md"
+                    ? "bg-[#FF4D1C]"
+                    : product.badge === "NEW DROP"
+                      ? "bg-[#0052FF]"
+                      : product.badge === "LIMITED"
+                        ? "bg-[#7C3AED]"
+                        : "bg-[#0E0E14]"
                 )}
               >
                 {product.badge}
               </span>
             )}
-            <span className="inline-block w-fit rounded-sm border border-white/10 bg-black/70 px-1.5 py-0.5 font-mono text-[8px] tracking-[0.16em] text-[#A1A1A6] uppercase backdrop-blur-md">
+            <span className="inline-block w-fit rounded-md border border-black/10 bg-white/90 px-2 py-0.5 font-mono text-[8px] font-semibold tracking-[0.16em] text-[#3F3F4E] uppercase backdrop-blur-md">
               {product.gender} · {product.subType}
             </span>
           </div>
@@ -61,10 +64,10 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
               onClick={() => toggleWishlist(product.id, product.name)}
               aria-label={`Save ${product.name} to archive`}
               className={cn(
-                "flex h-8 w-8 items-center justify-center rounded-sm border backdrop-blur-md transition",
+                "flex h-8 w-8 items-center justify-center rounded-md border backdrop-blur-md transition",
                 isWishlisted
-                  ? "border-white bg-white text-[#050505]"
-                  : "border-white/15 bg-black/70 text-[#D1D1D6] hover:border-white/40 hover:text-white"
+                  ? "border-[#E11D74] bg-[#E11D74] text-white shadow-sm"
+                  : "border-black/10 bg-white/90 text-[#3F3F4E] hover:border-[#E11D74] hover:text-[#E11D74]"
               )}
             >
               <Bookmark
@@ -76,7 +79,7 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
                 type="button"
                 onClick={() => onQuickView(product)}
                 aria-label={`Quick view ${product.name}`}
-                className="flex h-8 w-8 items-center justify-center rounded-sm border border-white/15 bg-black/70 text-[#D1D1D6] backdrop-blur-md transition hover:border-white/40 hover:text-white"
+                className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 bg-white/90 text-[#3F3F4E] backdrop-blur-md transition hover:border-[#0052FF] hover:text-[#0052FF]"
               >
                 <Eye className="h-3.5 w-3.5" />
               </button>
@@ -90,19 +93,19 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
             <button
               type="button"
               onClick={() => setShowSizes(true)}
-              className="flex w-full items-center justify-center gap-1.5 rounded-sm border border-white/20 bg-black/85 py-2 font-mono text-[10px] font-semibold tracking-[0.18em] text-white uppercase backdrop-blur-md transition hover:border-white hover:bg-white hover:text-[#050505] md:opacity-0 md:group-hover:opacity-100"
+              className="flex w-full items-center justify-center gap-1.5 rounded-md bg-[#0E0E14]/92 py-2.5 font-mono text-[10px] font-bold tracking-[0.18em] text-white uppercase shadow-lg backdrop-blur-md transition hover:bg-[#FF4D1C] md:opacity-0 md:group-hover:opacity-100"
             >
               <Plus className="h-3 w-3" />
               QUICK ADD SIZE
             </button>
           ) : (
-            <div className="rounded-sm border border-white/20 bg-[#050505]/95 p-2 backdrop-blur-xl">
-              <div className="mb-1.5 flex items-center justify-between font-mono text-[9px] tracking-[0.16em] text-[#8A8A8E]">
+            <div className="rounded-md border border-black/10 bg-white/95 p-2.5 shadow-xl backdrop-blur-xl">
+              <div className="mb-1.5 flex items-center justify-between font-mono text-[9px] font-semibold tracking-[0.16em] text-[#555563]">
                 <span>SELECT EU SIZE</span>
                 <button
                   type="button"
                   onClick={() => setShowSizes(false)}
-                  className="text-white hover:underline"
+                  className="text-[#FF4D1C] hover:underline"
                 >
                   CLOSE
                 </button>
@@ -116,7 +119,7 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
                       addToCart(product, size, product.colors[0]?.name, 1, true);
                       setShowSizes(false);
                     }}
-                    className="rounded-sm border border-white/15 bg-[#161619] py-1 font-mono text-[10px] text-white transition hover:border-white hover:bg-white hover:text-[#050505]"
+                    className="rounded border border-black/10 bg-[#F3F4F8] py-1 font-mono text-[10px] font-semibold text-[#0E0E14] transition hover:border-[#FF4D1C] hover:bg-[#FF4D1C] hover:text-white"
                   >
                     {size}
                   </button>
@@ -131,7 +134,7 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
       <div className="flex flex-1 flex-col justify-between p-4">
         <div>
           <div className="flex items-center justify-between gap-2">
-            <span className="font-mono text-[10px] tracking-[0.16em] text-[#8A8A8E]">
+            <span className="font-mono text-[10px] tracking-[0.16em] text-[#757585]">
               {product.sku}
             </span>
             <div className="flex items-center gap-1">
@@ -139,7 +142,7 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
                 <span
                   key={c.name}
                   title={c.name}
-                  className="h-2.5 w-2.5 rounded-full border border-white/25"
+                  className="h-2.5 w-2.5 rounded-full border border-black/20"
                   style={{ backgroundColor: c.hex }}
                 />
               ))}
@@ -148,24 +151,24 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
 
           <Link
             href={`/product/${product.slug}`}
-            className="mt-1.5 block font-display text-base font-bold tracking-tight text-[#F5F5F7] transition hover:text-white"
+            className="mt-1.5 block font-display text-base font-bold tracking-tight text-[#0E0E14] transition hover:text-[#FF4D1C]"
           >
             {product.name}
           </Link>
         </div>
 
-        <div className="mt-3 flex items-baseline justify-between border-t border-white/[0.06] pt-3">
+        <div className="mt-3 flex items-baseline justify-between border-t border-black/[0.06] pt-3">
           <div className="flex items-baseline gap-2">
-            <span className="font-mono text-sm font-semibold text-white">
+            <span className="font-mono text-sm font-bold text-[#0E0E14]">
               {formatPKR(product.pricePKR)}
             </span>
             {product.originalPricePKR && (
-              <span className="font-mono text-[11px] text-[#6E6E73] line-through">
+              <span className="font-mono text-[11px] text-[#8E8E9E] line-through">
                 {formatPKR(product.originalPricePKR)}
               </span>
             )}
           </div>
-          <span className="font-mono text-[10px] text-[#8A8A8E]">
+          <span className="font-mono text-[10px] font-semibold text-[#FF4D1C]">
             ★ {product.rating.toFixed(1)}
           </span>
         </div>

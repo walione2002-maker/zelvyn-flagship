@@ -18,16 +18,16 @@ export function ToastContainer() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.96 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-auto flex items-start justify-between gap-3 rounded-sm border border-white/20 bg-[#0E0E10]/95 p-3.5 shadow-2xl backdrop-blur-xl"
+            className="pointer-events-auto flex items-start justify-between gap-3 rounded-md border border-[#E2E4EC] bg-white/95 p-3.5 shadow-[0_14px_32px_rgba(14,14,20,0.12)] backdrop-blur-xl"
           >
             <div className="flex items-start gap-2.5">
-              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-white" />
+              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#059669]" />
               <div>
-                <p className="font-mono text-[11px] font-semibold tracking-[0.12em] text-white uppercase">
+                <p className="font-mono text-[11px] font-semibold tracking-[0.12em] text-[#0E0E14] uppercase">
                   {toast.title}
                 </p>
                 {toast.description && (
-                  <p className="mt-0.5 text-xs text-[#8A8A8E]">
+                  <p className="mt-0.5 text-xs text-[#555563]">
                     {toast.description}
                   </p>
                 )}
@@ -37,7 +37,7 @@ export function ToastContainer() {
               type="button"
               onClick={() => dismissToast(toast.id)}
               aria-label="Dismiss notification"
-              className="text-[#8A8A8E] transition hover:text-white"
+              className="text-[#757585] transition hover:text-[#0E0E14]"
             >
               <X className="h-3.5 w-3.5" />
             </button>

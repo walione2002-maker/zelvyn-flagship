@@ -47,31 +47,31 @@ export function ProductDetailClient({ product }: { product: Product }) {
       {/* Breadcrumb */}
       <nav
         aria-label="Breadcrumb"
-        className="mb-8 flex flex-wrap items-center gap-2 font-mono text-[10px] tracking-[0.18em] text-[#8A8A8E] uppercase"
+        className="mb-8 flex flex-wrap items-center gap-2 font-mono text-[10px] font-semibold tracking-[0.18em] text-[#555563] uppercase"
       >
-        <Link href="/" className="hover:text-white">
+        <Link href="/" className="hover:text-[#FF4D1C]">
           HOME
         </Link>
         <ChevronRight className="h-3 w-3" />
-        <Link href="/shop" className="hover:text-white">
+        <Link href="/shop" className="hover:text-[#FF4D1C]">
           SHOP
         </Link>
         <ChevronRight className="h-3 w-3" />
         <Link
           href={`/shop?category=${product.category}`}
-          className="hover:text-white"
+          className="hover:text-[#FF4D1C]"
         >
           {product.category}
         </Link>
         <ChevronRight className="h-3 w-3" />
-        <span className="text-white">{product.name}</span>
+        <span className="text-[#0E0E14]">{product.name}</span>
       </nav>
 
       {/* Main Split Grid */}
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
         {/* Left: High-res Studio Visual */}
         <div className="lg:col-span-7">
-          <div className="group relative aspect-[4/5] overflow-hidden rounded-sm border border-white/10 bg-[#0A0A0C]">
+          <div className="group relative aspect-[4/5] overflow-hidden rounded-xl border border-black/10 bg-[#F3F4F8] shadow-sm">
             <img
               src={product.image}
               alt={product.name}
@@ -80,10 +80,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 studioZoom ? "scale-125" : "group-hover:scale-105"
               )}
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505]/70 via-transparent to-white/[0.03]" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
 
             {product.badge && (
-              <span className="absolute top-4 left-4 rounded-sm border border-white/20 bg-black/80 px-3 py-1 font-mono text-[10px] font-bold tracking-[0.2em] text-white backdrop-blur-md">
+              <span className="absolute top-4 left-4 rounded-md bg-[#FF4D1C] px-3 py-1 font-mono text-[10px] font-bold tracking-[0.2em] text-white shadow-sm">
                 {product.badge}
               </span>
             )}
@@ -91,7 +91,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             <button
               type="button"
               onClick={() => setStudioZoom((v) => !v)}
-              className="absolute right-4 bottom-4 inline-flex items-center gap-1.5 rounded-sm border border-white/20 bg-black/80 px-3 py-1.5 font-mono text-[10px] tracking-[0.14em] text-white backdrop-blur-md transition hover:border-white"
+              className="absolute right-4 bottom-4 inline-flex items-center gap-1.5 rounded-md border border-black/10 bg-white/90 px-3 py-1.5 font-mono text-[10px] font-bold tracking-[0.14em] text-[#0E0E14] shadow-sm backdrop-blur-md transition hover:border-[#FF4D1C] hover:text-[#FF4D1C]"
             >
               <ZoomIn className="h-3.5 w-3.5" />
               {studioZoom ? "RESET VIEW" : "DETAIL ZOOM"}
@@ -101,42 +101,42 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
         {/* Right: Configuration & Specs */}
         <div className="flex flex-col lg:col-span-5">
-          <div className="flex items-center justify-between font-mono text-[11px] tracking-[0.2em] text-[#8A8A8E] uppercase">
+          <div className="flex items-center justify-between font-mono text-[11px] font-semibold tracking-[0.2em] text-[#0052FF] uppercase">
             <span>
               {product.sku} · {product.gender} · {product.subType}
             </span>
-            <span className="text-white">
+            <span className="text-[#FF4D1C]">
               ★ {product.rating.toFixed(1)} ({product.reviewCount})
             </span>
           </div>
 
-          <h1 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+          <h1 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-[#0E0E14] sm:text-4xl">
             {product.name}
           </h1>
 
-          <div className="mt-4 flex items-baseline gap-3 border-b border-white/[0.08] pb-6">
-            <span className="font-mono text-2xl font-bold text-white">
+          <div className="mt-4 flex items-baseline gap-3 border-b border-black/[0.08] pb-6">
+            <span className="font-mono text-2xl font-bold text-[#0E0E14]">
               {formatPKR(product.pricePKR)}
             </span>
             {product.originalPricePKR && (
-              <span className="font-mono text-sm text-[#6E6E73] line-through">
+              <span className="font-mono text-sm text-[#8E8E9E] line-through">
                 {formatPKR(product.originalPricePKR)}
               </span>
             )}
-            <span className="ml-auto font-mono text-[10px] tracking-[0.14em] text-[#8A8A8E]">
-              INCL. MATTE BOX
+            <span className="ml-auto rounded bg-[#ECFDF5] px-2 py-0.5 font-mono text-[10px] font-bold tracking-[0.14em] text-[#059669]">
+              INCL. COLLECTOR BOX
             </span>
           </div>
 
-          <p className="mt-5 text-sm leading-relaxed text-[#A1A1A6]">
+          <p className="mt-5 text-sm leading-relaxed text-[#555563]">
             {product.description}
           </p>
 
           {/* Finish / Color */}
           <div className="mt-6">
-            <span className="font-mono text-[10px] tracking-[0.2em] text-[#8A8A8E] uppercase">
+            <span className="font-mono text-[10px] font-semibold tracking-[0.2em] text-[#555563] uppercase">
               COLORWAY:{" "}
-              <strong className="text-white">{selectedColor}</strong>
+              <strong className="text-[#0E0E14]">{selectedColor}</strong>
             </span>
             <div className="mt-2.5 flex flex-wrap gap-2">
               {product.colors.map((c) => (
@@ -145,14 +145,14 @@ export function ProductDetailClient({ product }: { product: Product }) {
                   type="button"
                   onClick={() => setSelectedColor(c.name)}
                   className={cn(
-                    "flex items-center gap-2 rounded-sm border px-3.5 py-2 font-mono text-[11px] transition",
+                    "flex items-center gap-2 rounded-md border px-3.5 py-2 font-mono text-[11px] font-semibold transition",
                     selectedColor === c.name
-                      ? "border-white bg-white/10 text-white"
-                      : "border-white/10 bg-[#0E0E10] text-[#8A8A8E] hover:border-white/30"
+                      ? "border-[#0052FF] bg-[#EFF4FF] text-[#0052FF]"
+                      : "border-black/10 bg-white text-[#555563] hover:border-black/30"
                   )}
                 >
                   <span
-                    className="h-3.5 w-3.5 rounded-full border border-white/25"
+                    className="h-3.5 w-3.5 rounded-full border border-black/20"
                     style={{ backgroundColor: c.hex }}
                   />
                   {c.name}
@@ -163,14 +163,14 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
           {/* EU Size Grid */}
           <div className="mt-6">
-            <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] text-[#8A8A8E] uppercase">
+            <div className="flex items-center justify-between font-mono text-[10px] font-semibold tracking-[0.2em] text-[#555563] uppercase">
               <span>
-                SELECT SIZE: <strong className="text-white">EU {selectedSize}</strong>
+                SELECT SIZE: <strong className="text-[#0E0E14]">EU {selectedSize}</strong>
               </span>
               <button
                 type="button"
                 onClick={() => setSizeGuideOpen(true)}
-                className="inline-flex items-center gap-1.5 text-white underline-offset-4 hover:underline"
+                className="inline-flex items-center gap-1.5 text-[#FF4D1C] underline-offset-4 hover:underline"
               >
                 <Ruler className="h-3.5 w-3.5" />
                 SIZE GUIDE
@@ -183,10 +183,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
                   type="button"
                   onClick={() => setSelectedSize(size)}
                   className={cn(
-                    "rounded-sm border py-2.5 font-mono text-xs transition",
+                    "rounded-md border py-2.5 font-mono text-xs font-semibold transition",
                     selectedSize === size
-                      ? "border-white bg-white font-bold text-[#050505]"
-                      : "border-white/10 bg-[#0E0E10] text-[#D1D1D6] hover:border-white/35"
+                      ? "border-[#FF4D1C] bg-[#FF4D1C] font-bold text-white shadow-sm"
+                      : "border-black/10 bg-white text-[#0E0E14] hover:border-[#FF4D1C]"
                   )}
                 >
                   {size}
@@ -203,7 +203,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 onClick={() =>
                   addToCart(product, selectedSize, selectedColor, 1, true)
                 }
-                className="flex h-12 flex-1 items-center justify-center gap-2 rounded-sm border border-white bg-white font-mono text-xs font-bold tracking-[0.18em] text-[#050505] transition hover:bg-[#050505] hover:text-white"
+                className="flex h-12 flex-1 items-center justify-center gap-2 rounded-md bg-[#FF4D1C] font-mono text-xs font-bold tracking-[0.18em] text-white shadow-[0_8px_22px_rgba(255,77,28,0.3)] transition hover:bg-[#0E0E14]"
               >
                 <ShoppingBag className="h-4 w-4" />
                 ADD TO BAG
@@ -213,10 +213,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 onClick={() => toggleWishlist(product.id, product.name)}
                 aria-label="Toggle wishlist"
                 className={cn(
-                  "flex h-12 w-12 items-center justify-center rounded-sm border transition",
+                  "flex h-12 w-12 items-center justify-center rounded-md border transition",
                   isWishlisted
-                    ? "border-white bg-white text-[#050505]"
-                    : "border-white/15 bg-[#0E0E10] text-white hover:border-white/40"
+                    ? "border-[#E11D74] bg-[#E11D74] text-white"
+                    : "border-black/10 bg-white text-[#0E0E14] hover:border-[#E11D74] hover:text-[#E11D74]"
                 )}
               >
                 <Bookmark
@@ -231,7 +231,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 addToCart(product, selectedSize, selectedColor, 1, false);
                 router.push("/checkout");
               }}
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-sm border border-white/25 bg-[#161619] font-mono text-xs font-bold tracking-[0.18em] text-white transition hover:border-white"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#0E0E14] font-mono text-xs font-bold tracking-[0.18em] text-white transition hover:bg-[#0052FF]"
             >
               BUY NOW — EXPRESS CHECKOUT
               <ArrowRight className="h-4 w-4" />
@@ -239,23 +239,23 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </div>
 
           {/* Service Assurances */}
-          <div className="mt-6 grid grid-cols-2 gap-3 rounded-sm border border-white/[0.08] bg-[#0E0E10] p-4 font-mono text-[10px] tracking-[0.12em] text-[#A1A1A6]">
+          <div className="mt-6 grid grid-cols-2 gap-3 rounded-lg border border-black/[0.08] bg-[#F3F4F8] p-4 font-mono text-[10px] font-semibold tracking-[0.12em] text-[#3F3F4E]">
             <div className="flex items-center gap-2">
-              <Truck className="h-4 w-4 shrink-0 text-white" />
+              <Truck className="h-4 w-4 shrink-0 text-[#059669]" />
               <span>FREE DELIVERY &gt; PKR 8,000</span>
             </div>
             <div className="flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 shrink-0 text-white" />
+              <ShieldCheck className="h-4 w-4 shrink-0 text-[#0052FF]" />
               <span>COD, CARDS &amp; WALLETS</span>
             </div>
           </div>
 
           {/* Technical Specifications */}
-          <div className="mt-7 border-t border-white/10 pt-6">
-            <h2 className="font-mono text-[11px] font-bold tracking-[0.2em] text-white uppercase">
+          <div className="mt-7 border-t border-black/[0.08] pt-6">
+            <h2 className="font-mono text-[11px] font-bold tracking-[0.2em] text-[#0E0E14] uppercase">
               TECHNICAL SPECIFICATION
             </h2>
-            <dl className="mt-4 divide-y divide-white/[0.06] rounded-sm border border-white/[0.08] bg-[#0A0A0C]">
+            <dl className="mt-4 divide-y divide-black/[0.06] rounded-lg border border-black/[0.08] bg-white">
               {[
                 { label: "UPPER", value: product.specs.upper },
                 { label: "OUTSOLE", value: product.specs.sole },
@@ -268,11 +268,11 @@ export function ProductDetailClient({ product }: { product: Product }) {
                   key={spec.label}
                   className="flex flex-col justify-between gap-1 px-4 py-3 sm:flex-row sm:items-center"
                 >
-                  <dt className="font-mono text-[10px] tracking-[0.18em] text-[#8A8A8E]">
+                  <dt className="font-mono text-[10px] font-semibold tracking-[0.18em] text-[#555563]">
                     {spec.label}
                   </dt>
-                  <dd className="flex items-center gap-1.5 text-xs text-[#F5F5F7]">
-                    <Check className="h-3 w-3 text-[#8A8A8E]" />
+                  <dd className="flex items-center gap-1.5 text-xs font-medium text-[#0E0E14]">
+                    <Check className="h-3 w-3 text-[#059669]" />
                     {spec.value}
                   </dd>
                 </div>
@@ -283,19 +283,19 @@ export function ProductDetailClient({ product }: { product: Product }) {
       </div>
 
       {/* Related Products */}
-      <section className="mt-20 border-t border-white/[0.08] pt-14">
+      <section className="mt-20 border-t border-black/[0.08] pt-14">
         <div className="mb-8 flex items-end justify-between">
           <div>
-            <p className="font-mono text-[10px] tracking-[0.24em] text-[#8A8A8E] uppercase">
+            <p className="font-mono text-[10px] font-bold tracking-[0.24em] text-[#FF4D1C] uppercase">
               CONTINUE ROTATION
             </p>
-            <h2 className="mt-1.5 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+            <h2 className="mt-1.5 font-display text-2xl font-extrabold tracking-tight text-[#0E0E14] sm:text-3xl">
               SIMILAR SILHOUETTES
             </h2>
           </div>
           <Link
             href="/shop"
-            className="font-mono text-xs tracking-[0.16em] text-[#A1A1A6] hover:text-white"
+            className="font-mono text-xs font-semibold tracking-[0.16em] text-[#0052FF] hover:underline"
           >
             VIEW ALL →
           </Link>
