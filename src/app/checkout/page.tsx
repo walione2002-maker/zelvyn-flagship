@@ -35,7 +35,7 @@ const BANK_DETAILS = {
 };
 
 export default function CheckoutPage() {
-  const { hydrated, user } = useStore();
+  const { hydrated } = useStore();
   if (!hydrated) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
@@ -43,7 +43,7 @@ export default function CheckoutPage() {
       </div>
     );
   }
-  return <CheckoutFlow key={user?.loggedInAt || "anon"} />;
+  return <CheckoutFlow />;
 }
 
 function CheckoutFlow() {

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Bookmark, Eye, Layers, Plus } from "lucide-react";
+import { Bookmark, Eye, Plus } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import type { Product } from "@/types/store";
 import { cn, formatPKR } from "@/lib/utils";
@@ -102,11 +102,7 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
           </div>
         </div>
 
-        {/* Multi-Angle Indicator Pill */}
-        <div className="pointer-events-none absolute top-3 left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 font-mono text-[8px] font-bold tracking-[0.14em] text-[#0E0E14] shadow-xs backdrop-blur-md transition-opacity group-hover:opacity-100 sm:flex sm:opacity-0">
-          <Layers className="h-2.5 w-2.5 text-[#FF4D1C]" />
-          {product.images.length} ANGLES
-        </div>
+        {/* Top-center badge removed to prevent badge overlap; angle count is shown cleanly in card footer */}
 
         {/* Quick-Add Size Bar (hover on desktop, tap Quick Add on mobile) */}
         <div className="absolute inset-x-3 bottom-3">

@@ -149,14 +149,14 @@ function ShopCatalogInner({
           ZELVYN ARCHIVE / ALL DROPS
         </p>
         <div className="mt-2 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <h1 className="font-display text-4xl font-extrabold tracking-tight text-[#0E0E14] sm:text-5xl">
+          <h1 className="font-display text-2xl leading-tight font-extrabold tracking-tight text-[#0E0E14] sm:text-5xl">
             {gender === "girls"
               ? "GIRLS COLLECTION"
               : gender === "boys"
                 ? "BOYS COLLECTION"
                 : "FOOTWEAR CATALOG"}
           </h1>
-          <p className="rounded-full bg-[#EFF4FF] px-3.5 py-1.5 font-mono text-xs font-bold tracking-[0.14em] text-[#0052FF]">
+          <p className="w-fit rounded-full bg-[#EFF4FF] px-3.5 py-1.5 font-mono text-xs font-bold tracking-[0.14em] text-[#0052FF]">
             SHOWING {filteredProducts.length} OF {PRODUCTS.length} ARTICLES
           </p>
         </div>
