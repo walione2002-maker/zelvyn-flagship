@@ -38,6 +38,9 @@ export function ReceiptView({ order }: { order: OrderRecord }) {
         order.shippingPKR === 0 ? "FREE" : formatPKR(order.shippingPKR)
       }`,
       `TOTAL PAID : ${formatPKR(order.totalPKR)}`,
+      "-----------------------------------------",
+      "POLICY: Exchange only within 7 days for size",
+      "issues or damage. Strictly no returns/refunds.",
       "=========================================",
       "Thank you for keeping it real with ZELVYN.",
     ];
@@ -147,6 +150,10 @@ export function ReceiptView({ order }: { order: OrderRecord }) {
           <span>TOTAL</span>
           <span className="text-[#FF4D1C]">{formatPKR(order.totalPKR)}</span>
         </div>
+      </div>
+
+      <div className="mt-5 rounded-md border border-[#FF4D1C]/20 bg-[#FFF6F2] px-3.5 py-2.5 font-mono text-[10px] font-semibold tracking-[0.1em] text-[#FF4D1C]">
+        POLICY: EXCHANGE ONLY WITHIN 7 DAYS FOR SIZE ISSUES OR DAMAGE. STRICTLY NO RETURNS OR REFUNDS.
       </div>
 
       <div className="no-print mt-6 flex flex-wrap gap-3 border-t border-black/[0.08] pt-6">

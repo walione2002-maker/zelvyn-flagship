@@ -234,37 +234,72 @@ function CheckoutFlow() {
     }, 900);
   };
 
+  const [orderCopied, setOrderCopied] = useState(false);
+
+  const handleCopyOrderId = async (orderId: string) => {
+    try {
+      await navigator.clipboard.writeText(orderId);
+    } catch {
+      // Ignore clipboard failure
+    }
+    setOrderCopied(true);
+    pushToast("Order No. Copied", orderId);
+    setTimeout(() => setOrderCopied(false), 2400);
+  };
+
   if (confirmedOrder) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="mb-8 rounded-xl border border-[#059669]/25 bg-[#ECFDF5] p-6 shadow-sm sm:p-8">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#059669] text-white shadow-sm">
-              <CheckCircle2 className="h-6 w-6" />
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#059669] text-white shadow-sm">
+                <CheckCircle2 className="h-6 w-6" />
+              </div>
+              <div>
+                <p className="font-mono text-[10px] font-bold tracking-[0.24em] text-[#059669] uppercase">
+                  ORDER CONFIRMED · KEEPIN&apos; IT REAL
+                </p>
+                <h1 className="font-display text-2xl font-extrabold tracking-tight text-[#0E0E14] sm:text-3xl">
+                  THANK YOU, {confirmedOrder.customer.fullName.toUpperCase()}
+                </h1>
+              </div>
             </div>
-            <div>
-              <p className="font-mono text-[10px] font-bold tracking-[0.24em] text-[#059669] uppercase">
-                ORDER CONFIRMED · KEEPIN&apos; IT REAL
-              </p>
-              <h1 className="font-display text-2xl font-extrabold tracking-tight text-[#0E0E14] sm:text-3xl">
-                THANK YOU, {confirmedOrder.customer.fullName.toUpperCase()}
-              </h1>
+
+            <div className="flex items-center gap-2 rounded-lg border border-[#0052FF]/25 bg-white px-3.5 py-2 shadow-xs">
+              <div>
+                <span className="block font-mono text-[9px] font-bold tracking-[0.16em] text-[#555563]">
+                  ORDER NO.
+                </span>
+                <span className="font-mono text-sm font-extrabold text-[#0052FF]">
+                  {confirmedOrder.orderId}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleCopyOrderId(confirmedOrder.orderId)}
+                className="ml-2 inline-flex h-8 items-center gap-1 rounded bg-[#EFF4FF] px-2.5 font-mono text-[10px] font-bold text-[#0052FF] transition hover:bg-[#0052FF] hover:text-white"
+              >
+                {orderCopied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                {orderCopied ? "COPIED" : "COPY"}
+              </button>
             </div>
           </div>
+
           <p className="mt-4 text-sm text-[#3F3F4E]">
-            Your order{" "}
+            Save your Order No.{" "}
             <strong className="font-mono text-[#0052FF]">
               {confirmedOrder.orderId}
             </strong>{" "}
-            is locked in and queued for collector-box packing. Track live
-            dispatch updates anytime on your Orders page.
+            to track dispatch anytime. Remember: exchange only within 7 days for
+            size issues or damage (no return policy).
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <Link
-              href="/orders"
+              href={`/orders?orderId=${encodeURIComponent(confirmedOrder.orderId)}`}
               className="inline-flex h-11 items-center gap-2 rounded-md bg-[#FF4D1C] px-6 font-mono text-xs font-bold tracking-[0.16em] text-white shadow-[0_8px_20px_rgba(255,77,28,0.28)] transition hover:bg-[#0E0E14]"
             >
-              TRACK ORDER LIVE
+              TRACK ORDER {confirmedOrder.orderId}
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
@@ -913,9 +948,12 @@ function CheckoutFlow() {
               PLACE ORDER · {formatPKR(totalPKR)}
             </button>
 
-            <p className="mt-3 flex items-center justify-center gap-1.5 font-mono text-[10px] text-[#555563]">
-              <ShieldCheck className="h-3.5 w-3.5 text-[#059669]" />
-              PERSISTED LOCALLY · STATIC EXPORT READY
+            <p className="mt-3 flex items-center justify-center gap-1.5 font-mono text-[10px] font-semibold text-[#FF4D1C]">
+              <ShieldCheck className="h-3.5 w-3.5 shrink-0" />
+              EXCHANGE ONLY (SIZE / DAMAGE) · NO RETURN POLICY
+            </p>
+            <p className="mt-1.5 text-center font-mono text-[9px] text-[#555563]">
+              LOCAL ORDER PERSISTENCE · ZELVYN BOXED DISPATCH
             </p>
           </div>
         </aside>

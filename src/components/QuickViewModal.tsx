@@ -4,8 +4,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Ruler, ShoppingBag, X } from "lucide-react";
+import { ArrowRight, RefreshCw, Ruler, ShoppingBag, X } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
+import { ANGLE_LABELS, EXCHANGE_POLICY } from "@/data/products";
 import type { Product } from "@/types/store";
 import { cn, formatPKR } from "@/lib/utils";
 import { SizeGuideModal } from "@/components/SizeGuideModal";
@@ -25,8 +26,11 @@ function QuickViewContent({
     product.sizes[Math.floor(product.sizes.length / 2)] || product.sizes[0]
   );
   const [selectedColor, setSelectedColor] = useState<string>(
-    product.colors[0]?.name || "Obsidian"
+    product.colors[0]?.name || "Default"
   );
+  const [activeAngle, setActiveAngle] = useState<number>(0);
+
+  const gallery = product.images.length > 0 ? product.images : [product.image];
 
   return (
     <motion.div
@@ -46,19 +50,46 @@ function QuickViewContent({
         <X className="h-4 w-4" />
       </button>
 
-      {/* Left Visual */}
-      <div className="relative aspect-square bg-[#F3F4F8] md:aspect-auto">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="h-full w-full object-cover"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
-        {product.badge && (
-          <span className="absolute top-4 left-4 rounded-md bg-[#FF4D1C] px-2.5 py-1 font-mono text-[10px] font-bold tracking-[0.18em] text-white uppercase shadow-sm">
-            {product.badge}
+      {/* Left Multi-Angle Visual */}
+      <div className="flex flex-col bg-[#F3F4F8]">
+        <div className="relative aspect-[4/4.3] w-full overflow-hidden">
+          <img
+            src={gallery[activeAngle]}
+            alt={`${product.name} — ${ANGLE_LABELS[activeAngle] || "View"}`}
+            className="h-full w-full object-cover"
+          />
+          {product.badge && (
+            <span className="absolute top-4 left-4 rounded-md bg-[#FF4D1C] px-2.5 py-1 font-mono text-[10px] font-bold tracking-[0.18em] text-white uppercase shadow-sm">
+              {product.badge}
+            </span>
+          )}
+          <span className="absolute bottom-3 left-4 rounded-md border border-black/10 bg-white/90 px-2.5 py-1 font-mono text-[9px] font-bold tracking-[0.14em] text-[#0E0E14] uppercase backdrop-blur-md">
+            {ANGLE_LABELS[activeAngle] || `ANGLE ${activeAngle + 1}`}
           </span>
-        )}
+        </div>
+
+        {/* 4-Angle Switcher Thumbnails */}
+        <div className="grid grid-cols-4 gap-2 border-t border-black/[0.06] bg-white p-3">
+          {gallery.map((imgSrc, idx) => (
+            <button
+              key={imgSrc}
+              type="button"
+              onClick={() => setActiveAngle(idx)}
+              className={cn(
+                "overflow-hidden rounded-md border-2 bg-[#F3F4F8] transition",
+                activeAngle === idx
+                  ? "border-[#FF4D1C] shadow-xs"
+                  : "border-transparent opacity-70 hover:opacity-100"
+              )}
+            >
+              <img
+                src={imgSrc}
+                alt={`${product.name} thumbnail ${idx + 1}`}
+                className="aspect-[4/5] w-full object-cover"
+              />
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Right Details */}
@@ -151,8 +182,13 @@ function QuickViewContent({
           </div>
         </div>
 
-        {/* CTAs */}
+        {/* CTAs & Exchange Policy */}
         <div className="mt-6 flex flex-col gap-2.5">
+          <div className="flex items-center gap-1.5 rounded-md border border-[#FF4D1C]/20 bg-[#FFF6F2] px-3 py-2 font-mono text-[9px] font-bold tracking-[0.12em] text-[#FF4D1C]">
+            <RefreshCw className="h-3 w-3 shrink-0" />
+            <span>{EXCHANGE_POLICY.short}</span>
+          </div>
+
           <div className="grid grid-cols-2 gap-2.5">
             <button
               type="button"
@@ -183,7 +219,7 @@ function QuickViewContent({
             onClick={onClose}
             className="text-center font-mono text-[10px] font-semibold tracking-[0.18em] text-[#555563] uppercase underline-offset-4 transition hover:text-[#FF4D1C] hover:underline"
           >
-            VIEW FULL SPECIFICATION &amp; DETAILS →
+            VIEW FULL SPECIFICATION &amp; 4 ANGLES →
           </Link>
         </div>
       </div>
@@ -208,7 +244,7 @@ export function QuickViewModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/35 p-4 backdrop-blur-sm"
             onClick={onClose}
           >
             <QuickViewContent

@@ -80,7 +80,7 @@ export const PAKISTAN_CITIES = [
 
 export const ORDER_STAGE_LABELS = [
   "Order Placed",
-  "Packed in Matte Box",
+  "Packed in ZELVYN Box",
   "Dispatched",
   "Delivered",
 ] as const;

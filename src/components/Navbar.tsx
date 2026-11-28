@@ -18,9 +18,9 @@ import { cn } from "@/lib/utils";
 const ANNOUNCEMENT_ITEMS = [
   "KEEPIN' IT REAL",
   "FREE DELIVERY OVER PKR 8,000",
-  "11:11 DROP LIVE — UP TO 50% OFF",
+  "EXCHANGE ONLY (SIZE ISSUES OR DAMAGE) · NO RETURNS",
+  "GIRLS PASTEL & BOYS DROPS LIVE",
   "COD, EASYPAISA, JAZZCASH & CARDS ACCEPTED",
-  "USE CODE REAL10 FOR 10% OFF",
 ];
 
 const NAV_LINKS = [
@@ -28,7 +28,7 @@ const NAV_LINKS = [
   { label: "BOYS", href: "/shop?gender=boys" },
   { label: "GIRLS", href: "/shop?gender=girls" },
   { label: "11:11 DROP", href: "/shop?badge=50%25%20OFF" },
-  { label: "ORDERS", href: "/orders" },
+  { label: "TRACK ORDER", href: "/orders" },
 ];
 
 export function Navbar() {

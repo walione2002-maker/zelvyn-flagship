@@ -319,6 +319,9 @@ export function CartDrawer() {
                   PROCEED TO CHECKOUT
                   <ArrowRight className="h-4 w-4" />
                 </Link>
+                <p className="mt-2.5 text-center font-mono text-[9px] font-semibold tracking-[0.12em] text-[#555563]">
+                  EXCHANGE ONLY (SIZE / DAMAGE) · NO RETURN POLICY
+                </p>
               </div>
             )}
           </motion.aside>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Bookmark, Eye, Plus } from "lucide-react";
+import { Bookmark, Eye, Layers, Plus } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import type { Product } from "@/types/store";
 import { cn, formatPKR } from "@/lib/utils";
@@ -17,21 +17,34 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
   const [showSizes, setShowSizes] = useState(false);
 
   const isWishlisted = hydrated && wishlist.includes(product.id);
+  const primaryImage = product.images[0] || product.image;
+  const secondaryImage = product.images[1] || primaryImage;
+  const isGirls = product.gender === "girls";
 
   return (
     <article
-      className="group relative flex flex-col overflow-hidden rounded-lg border border-black/[0.08] bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[#FF4D1C]/40 hover:shadow-[0_18px_40px_-14px_rgba(255,77,28,0.2)]"
+      className={cn(
+        "group relative flex flex-col overflow-hidden rounded-lg border border-black/[0.08] bg-white transition-all duration-300 hover:-translate-y-0.5",
+        isGirls
+          ? "hover:border-[#E11D74]/45 hover:shadow-[0_18px_40px_-14px_rgba(225,29,116,0.22)]"
+          : "hover:border-[#FF4D1C]/40 hover:shadow-[0_18px_40px_-14px_rgba(255,77,28,0.2)]"
+      )}
       onMouseLeave={() => setShowSizes(false)}
     >
-      {/* Visual Frame */}
+      {/* Visual Frame with Primary -> Secondary Angle Hover Swap */}
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#F3F4F8]">
         <Link href={`/product/${product.slug}`} className="block h-full w-full">
           <img
-            src={product.image}
+            src={primaryImage}
             alt={product.name}
-            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            className="h-full w-full object-cover transition-all duration-500 ease-out group-hover:scale-105 group-hover:opacity-0"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-white/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          <img
+            src={secondaryImage}
+            alt={`${product.name} side profile`}
+            className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-100 group-hover:opacity-100"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         </Link>
 
         {/* Top Badges & Controls */}
@@ -44,7 +57,9 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
                   product.badge === "50% OFF"
                     ? "bg-[#FF4D1C]"
                     : product.badge === "NEW DROP"
-                      ? "bg-[#0052FF]"
+                      ? isGirls
+                        ? "bg-[#E11D74]"
+                        : "bg-[#0052FF]"
                       : product.badge === "LIMITED"
                         ? "bg-[#7C3AED]"
                         : "bg-[#0E0E14]"
@@ -87,13 +102,22 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
           </div>
         </div>
 
+        {/* Multi-Angle Indicator Pill */}
+        <div className="pointer-events-none absolute top-3 left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 font-mono text-[8px] font-bold tracking-[0.14em] text-[#0E0E14] shadow-xs backdrop-blur-md transition-opacity group-hover:opacity-100 sm:flex sm:opacity-0">
+          <Layers className="h-2.5 w-2.5 text-[#FF4D1C]" />
+          {product.images.length} ANGLES
+        </div>
+
         {/* Quick-Add Size Bar (hover on desktop, tap Quick Add on mobile) */}
         <div className="absolute inset-x-3 bottom-3">
           {!showSizes ? (
             <button
               type="button"
               onClick={() => setShowSizes(true)}
-              className="flex w-full items-center justify-center gap-1.5 rounded-md bg-[#0E0E14]/92 py-2.5 font-mono text-[10px] font-bold tracking-[0.18em] text-white uppercase shadow-lg backdrop-blur-md transition hover:bg-[#FF4D1C] md:opacity-0 md:group-hover:opacity-100"
+              className={cn(
+                "flex w-full items-center justify-center gap-1.5 rounded-md bg-[#0E0E14]/92 py-2.5 font-mono text-[10px] font-bold tracking-[0.18em] text-white uppercase shadow-lg backdrop-blur-md transition md:opacity-0 md:group-hover:opacity-100",
+                isGirls ? "hover:bg-[#E11D74]" : "hover:bg-[#FF4D1C]"
+              )}
             >
               <Plus className="h-3 w-3" />
               QUICK ADD SIZE
@@ -130,7 +154,7 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
         </div>
       </div>
 
-      {/* Product Metadata */}
+      {/* Product Metadata (Zero fake ratings/reviews) */}
       <div className="flex flex-1 flex-col justify-between p-4">
         <div>
           <div className="flex items-center justify-between gap-2">
@@ -151,7 +175,10 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
 
           <Link
             href={`/product/${product.slug}`}
-            className="mt-1.5 block font-display text-base font-bold tracking-tight text-[#0E0E14] transition hover:text-[#FF4D1C]"
+            className={cn(
+              "mt-1.5 block font-display text-base font-bold tracking-tight text-[#0E0E14] transition",
+              isGirls ? "hover:text-[#E11D74]" : "hover:text-[#FF4D1C]"
+            )}
           >
             {product.name}
           </Link>
@@ -168,8 +195,8 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
               </span>
             )}
           </div>
-          <span className="font-mono text-[10px] font-semibold text-[#FF4D1C]">
-            ★ {product.rating.toFixed(1)}
+          <span className="font-mono text-[9px] font-semibold tracking-[0.12em] text-[#555563] uppercase">
+            {product.images.length} ANGLES
           </span>
         </div>
       </div>

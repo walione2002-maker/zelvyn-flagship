@@ -7,7 +7,9 @@ import {
   ArrowRight,
   Bookmark,
   Check,
+  ChevronLeft,
   ChevronRight,
+  RefreshCw,
   Ruler,
   ShieldCheck,
   ShoppingBag,
@@ -15,7 +17,7 @@ import {
   ZoomIn,
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
-import { PRODUCTS } from "@/data/products";
+import { ANGLE_LABELS, EXCHANGE_POLICY, PRODUCTS } from "@/data/products";
 import type { Product } from "@/types/store";
 import { ProductCard } from "@/components/ProductCard";
 import { SizeGuideModal } from "@/components/SizeGuideModal";
@@ -25,22 +27,30 @@ export function ProductDetailClient({ product }: { product: Product }) {
   const router = useRouter();
   const { addToCart, wishlist, toggleWishlist, hydrated } = useStore();
 
+  const gallery = product.images.length > 0 ? product.images : [product.image];
+  const [activeAngle, setActiveAngle] = useState<number>(0);
   const [selectedSize, setSelectedSize] = useState<number>(
     product.sizes[Math.floor(product.sizes.length / 2)] || product.sizes[0]
   );
   const [selectedColor, setSelectedColor] = useState<string>(
-    product.colors[0]?.name || "Obsidian"
+    product.colors[0]?.name || "Default"
   );
   const [studioZoom, setStudioZoom] = useState(false);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
 
   const isWishlisted = hydrated && wishlist.includes(product.id);
+  const isGirls = product.gender === "girls";
 
   const related = PRODUCTS.filter(
     (p) =>
       p.id !== product.id &&
       (p.category === product.category || p.gender === product.gender)
   ).slice(0, 4);
+
+  const prevAngle = () =>
+    setActiveAngle((i) => (i - 1 + gallery.length) % gallery.length);
+  const nextAngle = () =>
+    setActiveAngle((i) => (i + 1) % gallery.length);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
@@ -58,6 +68,13 @@ export function ProductDetailClient({ product }: { product: Product }) {
         </Link>
         <ChevronRight className="h-3 w-3" />
         <Link
+          href={`/shop?gender=${product.gender}`}
+          className="hover:text-[#FF4D1C]"
+        >
+          {product.gender}
+        </Link>
+        <ChevronRight className="h-3 w-3" />
+        <Link
           href={`/shop?category=${product.category}`}
           className="hover:text-[#FF4D1C]"
         >
@@ -69,23 +86,54 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
       {/* Main Split Grid */}
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-        {/* Left: High-res Studio Visual */}
-        <div className="lg:col-span-7">
+        {/* Left: Multi-Angle Studio Gallery */}
+        <div className="space-y-4 lg:col-span-7">
           <div className="group relative aspect-[4/5] overflow-hidden rounded-xl border border-black/10 bg-[#F3F4F8] shadow-sm">
             <img
-              src={product.image}
-              alt={product.name}
+              src={gallery[activeAngle]}
+              alt={`${product.name} — ${ANGLE_LABELS[activeAngle] || "View"}`}
               className={cn(
                 "h-full w-full object-cover transition-transform duration-700 ease-out",
                 studioZoom ? "scale-125" : "group-hover:scale-105"
               )}
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
 
             {product.badge && (
-              <span className="absolute top-4 left-4 rounded-md bg-[#FF4D1C] px-3 py-1 font-mono text-[10px] font-bold tracking-[0.2em] text-white shadow-sm">
+              <span
+                className={cn(
+                  "absolute top-4 left-4 rounded-md px-3 py-1 font-mono text-[10px] font-bold tracking-[0.2em] text-white shadow-sm",
+                  isGirls ? "bg-[#E11D74]" : "bg-[#FF4D1C]"
+                )}
+              >
                 {product.badge}
               </span>
+            )}
+
+            <span className="absolute bottom-4 left-4 rounded-md border border-black/10 bg-white/90 px-3 py-1.5 font-mono text-[10px] font-bold tracking-[0.14em] text-[#0E0E14] uppercase shadow-xs backdrop-blur-md">
+              {ANGLE_LABELS[activeAngle] || `ANGLE ${activeAngle + 1}`} (
+              {activeAngle + 1}/{gallery.length})
+            </span>
+
+            {/* Angle Left / Right Controls */}
+            {gallery.length > 1 && (
+              <div className="absolute inset-x-3 top-1/2 flex -translate-y-1/2 justify-between pointer-events-none">
+                <button
+                  type="button"
+                  onClick={prevAngle}
+                  aria-label="Previous angle"
+                  className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-white/90 text-[#0E0E14] shadow-md backdrop-blur-md transition hover:border-[#FF4D1C] hover:text-[#FF4D1C]"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={nextAngle}
+                  aria-label="Next angle"
+                  className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-white/90 text-[#0E0E14] shadow-md backdrop-blur-md transition hover:border-[#FF4D1C] hover:text-[#FF4D1C]"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
             )}
 
             <button
@@ -97,6 +145,37 @@ export function ProductDetailClient({ product }: { product: Product }) {
               {studioZoom ? "RESET VIEW" : "DETAIL ZOOM"}
             </button>
           </div>
+
+          {/* 4-Angle Thumbnail Strip */}
+          <div className="grid grid-cols-4 gap-3">
+            {gallery.map((imgSrc, idx) => (
+              <button
+                key={imgSrc}
+                type="button"
+                onClick={() => {
+                  setActiveAngle(idx);
+                  setStudioZoom(false);
+                }}
+                className={cn(
+                  "group relative overflow-hidden rounded-lg border-2 bg-[#F3F4F8] transition",
+                  activeAngle === idx
+                    ? isGirls
+                      ? "border-[#E11D74] shadow-md"
+                      : "border-[#FF4D1C] shadow-md"
+                    : "border-black/10 opacity-75 hover:opacity-100"
+                )}
+              >
+                <img
+                  src={imgSrc}
+                  alt={`${product.name} ${ANGLE_LABELS[idx] || ""}`}
+                  className="aspect-[4/5] w-full object-cover"
+                />
+                <span className="block border-t border-black/[0.06] bg-white py-1.5 text-center font-mono text-[9px] font-bold tracking-[0.12em] text-[#0E0E14] uppercase">
+                  {ANGLE_LABELS[idx] || `Angle ${idx + 1}`}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Right: Configuration & Specs */}
@@ -105,8 +184,8 @@ export function ProductDetailClient({ product }: { product: Product }) {
             <span>
               {product.sku} · {product.gender} · {product.subType}
             </span>
-            <span className="text-[#FF4D1C]">
-              ★ {product.rating.toFixed(1)} ({product.reviewCount})
+            <span className="rounded bg-[#EFF4FF] px-2 py-0.5 text-[10px] font-bold text-[#0052FF]">
+              {gallery.length} STUDIO ANGLES
             </span>
           </div>
 
@@ -165,7 +244,8 @@ export function ProductDetailClient({ product }: { product: Product }) {
           <div className="mt-6">
             <div className="flex items-center justify-between font-mono text-[10px] font-semibold tracking-[0.2em] text-[#555563] uppercase">
               <span>
-                SELECT SIZE: <strong className="text-[#0E0E14]">EU {selectedSize}</strong>
+                SELECT SIZE:{" "}
+                <strong className="text-[#0E0E14]">EU {selectedSize}</strong>
               </span>
               <button
                 type="button"
@@ -185,7 +265,9 @@ export function ProductDetailClient({ product }: { product: Product }) {
                   className={cn(
                     "rounded-md border py-2.5 font-mono text-xs font-semibold transition",
                     selectedSize === size
-                      ? "border-[#FF4D1C] bg-[#FF4D1C] font-bold text-white shadow-sm"
+                      ? isGirls
+                        ? "border-[#E11D74] bg-[#E11D74] font-bold text-white shadow-sm"
+                        : "border-[#FF4D1C] bg-[#FF4D1C] font-bold text-white shadow-sm"
                       : "border-black/10 bg-white text-[#0E0E14] hover:border-[#FF4D1C]"
                   )}
                 >
@@ -203,7 +285,12 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 onClick={() =>
                   addToCart(product, selectedSize, selectedColor, 1, true)
                 }
-                className="flex h-12 flex-1 items-center justify-center gap-2 rounded-md bg-[#FF4D1C] font-mono text-xs font-bold tracking-[0.18em] text-white shadow-[0_8px_22px_rgba(255,77,28,0.3)] transition hover:bg-[#0E0E14]"
+                className={cn(
+                  "flex h-12 flex-1 items-center justify-center gap-2 rounded-md font-mono text-xs font-bold tracking-[0.18em] text-white transition hover:bg-[#0E0E14]",
+                  isGirls
+                    ? "bg-[#E11D74] shadow-[0_8px_22px_rgba(225,29,116,0.3)]"
+                    : "bg-[#FF4D1C] shadow-[0_8px_22px_rgba(255,77,28,0.3)]"
+                )}
               >
                 <ShoppingBag className="h-4 w-4" />
                 ADD TO BAG
@@ -238,15 +325,21 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </button>
           </div>
 
-          {/* Service Assurances */}
-          <div className="mt-6 grid grid-cols-2 gap-3 rounded-lg border border-black/[0.08] bg-[#F3F4F8] p-4 font-mono text-[10px] font-semibold tracking-[0.12em] text-[#3F3F4E]">
-            <div className="flex items-center gap-2">
-              <Truck className="h-4 w-4 shrink-0 text-[#059669]" />
-              <span>FREE DELIVERY &gt; PKR 8,000</span>
+          {/* Service Assurances + Strict Exchange-Only Policy */}
+          <div className="mt-6 space-y-2.5 rounded-lg border border-black/[0.08] bg-[#F3F4F8] p-4 font-mono text-[10px] font-semibold tracking-[0.12em] text-[#3F3F4E]">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="flex items-center gap-2">
+                <Truck className="h-4 w-4 shrink-0 text-[#059669]" />
+                <span>FREE DELIVERY &gt; PKR 8,000</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 shrink-0 text-[#0052FF]" />
+                <span>COD, CARDS &amp; WALLETS</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 shrink-0 text-[#0052FF]" />
-              <span>COD, CARDS &amp; WALLETS</span>
+            <div className="flex items-start gap-2 border-t border-black/[0.06] pt-2.5 text-[#FF4D1C]">
+              <RefreshCw className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+              <span>{EXCHANGE_POLICY.detail}</span>
             </div>
           </div>
 

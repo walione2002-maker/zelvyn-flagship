@@ -43,9 +43,8 @@ export interface Product {
   colors: ProductColor[];
   description: string;
   specs: ProductSpecs;
-  rating: number;
-  reviewCount: number;
   image: string;
+  images: string[];
   featured?: boolean;
 }
 

@@ -8,11 +8,14 @@ import {
   ArrowRight,
   Box,
   CheckCircle2,
+  Filter,
+  RefreshCw,
   ShieldCheck,
+  SlidersHorizontal,
   Sparkles,
   Truck,
 } from "lucide-react";
-import { CATEGORY_META, PRODUCTS } from "@/data/products";
+import { CATEGORY_META, EXCHANGE_POLICY, PRODUCTS } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 import { QuickViewModal } from "@/components/QuickViewModal";
 import type { Category, Product } from "@/types/store";
@@ -29,28 +32,28 @@ const CATEGORY_BENTO: {
     key: "casual",
     title: "CASUAL",
     subtitle: "SNEAKERS & JOGGERS",
-    image: "/images/products/apex-obsidian-runner.png",
+    image: "/images/products/zelvyn-apex-cobalt-runner-1.png",
     count: PRODUCTS.filter((p) => p.category === "casual").length,
   },
   {
     key: "formal",
     title: "FORMAL",
     subtitle: "LOAFERS & FORMAL SHOES",
-    image: "/images/products/sovereign-matte-loafer.png",
+    image: "/images/products/zelvyn-rose-pearl-loafer-1.png",
     count: PRODUCTS.filter((p) => p.category === "formal").length,
   },
   {
     key: "sports",
     title: "SPORTS",
     subtitle: "GRIPPERS & SPORTS SHOES",
-    image: "/images/products/vortex-turf-gripper.png",
+    image: "/images/products/zelvyn-vortex-turf-gripper-1.png",
     count: PRODUCTS.filter((p) => p.category === "sports").length,
   },
   {
     key: "slippers",
     title: "SLIPPERS",
     subtitle: "SLIPPERS & CROCS",
-    image: "/images/products/lunar-molded-croc.png",
+    image: "/images/products/zelvyn-lilac-molded-croc-1.png",
     count: PRODUCTS.filter((p) => p.category === "slippers").length,
   },
 ];
@@ -93,23 +96,62 @@ export default function HomePage() {
   const [dropFilter, setDropFilter] = useState<
     "all" | "boys" | "girls" | "unisex"
   >("all");
+  const [categoryFilter, setCategoryFilter] = useState<"all" | Category>("all");
+  const [sortBy, setSortBy] = useState<
+    "featured" | "newest" | "price-asc" | "price-desc"
+  >("featured");
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(
     null
   );
 
   const countdown = useCountdown();
 
-  const featuredProducts = useMemo(() => {
+  const filteredDrops = useMemo(() => {
     const pool = PRODUCTS.filter((p) => {
-      if (dropFilter === "all") return p.featured;
-      if (dropFilter === "boys")
-        return p.gender === "boys" || p.gender === "unisex";
-      if (dropFilter === "girls")
-        return p.gender === "girls" || p.gender === "unisex";
-      return p.gender === "unisex";
+      if (dropFilter === "boys" && p.gender !== "boys" && p.gender !== "unisex") {
+        return false;
+      }
+      if (
+        dropFilter === "girls" &&
+        p.gender !== "girls" &&
+        p.gender !== "unisex"
+      ) {
+        return false;
+      }
+      if (dropFilter === "unisex" && p.gender !== "unisex") {
+        return false;
+      }
+      if (categoryFilter !== "all" && p.category !== categoryFilter) {
+        return false;
+      }
+      return true;
     });
-    return pool.slice(0, 8);
-  }, [dropFilter]);
+
+    const sorted = [...pool];
+    if (sortBy === "price-asc") {
+      sorted.sort((a, b) => a.pricePKR - b.pricePKR);
+    } else if (sortBy === "price-desc") {
+      sorted.sort((a, b) => b.pricePKR - a.pricePKR);
+    } else if (sortBy === "newest") {
+      sorted.sort(
+        (a, b) =>
+          Number(b.badge === "NEW DROP") - Number(a.badge === "NEW DROP")
+      );
+    } else {
+      sorted.sort(
+        (a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured))
+      );
+    }
+
+    if (
+      dropFilter === "all" &&
+      categoryFilter === "all" &&
+      sortBy === "featured"
+    ) {
+      return sorted.slice(0, 8);
+    }
+    return sorted;
+  }, [dropFilter, categoryFilter, sortBy]);
 
   return (
     <div className="bg-[#FAFAFC] text-[#0E0E14]">
@@ -140,7 +182,7 @@ export default function HomePage() {
           >
             <div className="inline-flex items-center gap-2.5 rounded-full border border-[#FF4D1C]/25 bg-white/90 px-3.5 py-1.5 font-mono text-[10px] font-bold tracking-[0.24em] text-[#FF4D1C] uppercase shadow-sm backdrop-blur-md">
               <span className="h-2 w-2 rounded-full bg-[#FF4D1C]" />
-              SEASON 01 ARCHIVE · 24 SILHOUETTES LIVE
+              SEASON 01 ARCHIVE · 24 ZELVYN SILHOUETTES LIVE
             </div>
 
             <h1 className="mt-6 font-display text-5xl font-extrabold leading-[0.88] tracking-[-0.05em] text-[#0E0E14] sm:text-8xl lg:text-[7.5rem]">
@@ -150,9 +192,9 @@ export default function HomePage() {
               KEEPIN&apos; IT REAL
             </p>
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#3F3F4E] sm:text-base">
-              Vibrant luxury streetwear footwear engineered in full-grain
-              leather, sculpted Phylon, and high-traction carbon composites.
-              Built for Boys, Girls, and Unisex rotations across Pakistan.
+              Vibrant luxury streetwear footwear crafted across bold Boys
+              silhouettes and pastel-toned Girls collections. Multi-angle studio
+              inspected and delivered nationwide across Pakistan.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3.5">
@@ -183,7 +225,7 @@ export default function HomePage() {
           <div className="mt-10 hidden items-center justify-between border-t border-black/10 pt-5 sm:flex">
             <div className="flex items-center gap-8 font-mono text-[10px] font-semibold tracking-[0.2em] text-[#555563]">
               <span>EU 36 — EU 45</span>
-              <span className="text-[#FF4D1C]">PKR 4,900 — PKR 24,500</span>
+              <span className="text-[#FF4D1C]">EXCHANGE ONLY (SIZE / DAMAGE) · NO RETURNS</span>
               <span>COD · CARDS · EASYPAISA · JAZZCASH</span>
             </div>
             <a
@@ -197,7 +239,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. SPLIT GENDER SHOWCASE (50/50) */}
+      {/* 2. SPLIT GENDER SHOWCASE (50/50 — FOOTWEAR ONLY) */}
       <section
         id="gender-showcase"
         className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24"
@@ -241,7 +283,7 @@ export default function HomePage() {
                     BOYS
                   </h3>
                   <p className="mt-1.5 text-sm text-white/90">
-                    Chunky Runners, Commando Loafers, Turf Grippers &amp; Slides.
+                    Cobalt Runners, Lug Loafers, Turf Grippers &amp; Utility Crocs.
                   </p>
                 </div>
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-white text-[#0052FF] shadow-md transition-transform duration-300 group-hover:translate-x-1">
@@ -251,28 +293,28 @@ export default function HomePage() {
             </div>
           </Link>
 
-          {/* GIRLS CARD */}
+          {/* GIRLS CARD — FOOTWEAR ONLY, GIRLY PASTEL EDITION */}
           <Link
             href="/shop?gender=girls"
-            className="group relative flex min-h-[460px] items-end overflow-hidden rounded-xl border-2 border-[#E11D74]/20 bg-[#FFF1F6] p-7 shadow-sm transition-all duration-500 hover:border-[#E11D74] hover:shadow-[0_20px_50px_-14px_rgba(225,29,116,0.3)] sm:min-h-[540px] sm:p-10"
+            className="group relative flex min-h-[460px] items-end overflow-hidden rounded-xl border-2 border-[#E11D74]/25 bg-[#FFF1F6] p-7 shadow-sm transition-all duration-500 hover:border-[#E11D74] hover:shadow-[0_20px_50px_-14px_rgba(225,29,116,0.3)] sm:min-h-[540px] sm:p-10"
           >
             <img
               src="/images/hero/split-girls.png"
-              alt="ZELVYN Girls Footwear Collection"
+              alt="ZELVYN Girls Pastel Footwear Collection"
               className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#3E0822]/90 via-[#3E0822]/35 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#5C0E34]/85 via-[#5C0E34]/20 to-transparent" />
             <div className="relative z-10 w-full">
               <span className="inline-block rounded-md bg-[#E11D74] px-3 py-1 font-mono text-[10px] font-bold tracking-[0.2em] text-white shadow-sm">
-                EU 36 — EU 41 · 14 SILHOUETTES
+                EU 36 — EU 41 · 14 PASTEL SILHOUETTES
               </span>
               <div className="mt-4 flex items-end justify-between gap-4">
                 <div>
                   <h3 className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
                     GIRLS
                   </h3>
-                  <p className="mt-1.5 text-sm text-white/90">
-                    Sculpted Platforms, Penny Loafers, Studio Grippers &amp; Crocs.
+                  <p className="mt-1.5 text-sm text-white/95">
+                    Blush Platforms, Rose Pearl Loafers, Mint Runners &amp; Lilac Crocs.
                   </p>
                 </div>
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-white text-[#E11D74] shadow-md transition-transform duration-300 group-hover:translate-x-1">
@@ -297,8 +339,8 @@ export default function HomePage() {
               </h2>
             </div>
             <p className="max-w-md text-xs leading-relaxed text-[#555563]">
-              Every discipline is stocked across both Boys and Girls sizing
-              with vibrant street-ready finishing.
+              Every discipline is stocked across both Boys and pastel-toned Girls
+              sizing with 4 studio angles per article.
             </p>
           </div>
 
@@ -308,10 +350,10 @@ export default function HomePage() {
                 idx === 0
                   ? "bg-[#FF4D1C]"
                   : idx === 1
-                    ? "bg-[#0052FF]"
+                    ? "bg-[#E11D74]"
                     : idx === 2
                       ? "bg-[#059669]"
-                      : "bg-[#E11D74]";
+                      : "bg-[#7C3AED]";
               return (
                 <Link
                   key={cat.key}
@@ -323,7 +365,7 @@ export default function HomePage() {
                     alt={cat.title}
                     className="absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E14]/90 via-[#0E0E14]/40 to-[#0E0E14]/25" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E14]/90 via-[#0E0E14]/35 to-[#0E0E14]/15" />
 
                   <div className="relative z-10 flex items-center justify-between">
                     <span className="rounded bg-white/90 px-2 py-0.5 font-mono text-[9px] font-bold tracking-[0.18em] text-[#0E0E14] backdrop-blur-md">
@@ -358,19 +400,53 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. FEATURED DROP GRID (FILTERABLE + QUICK ADD) */}
+      {/* 4. FEATURED DROP MATRIX (WITH FULL FILTERS & SORT BY) */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="font-mono text-[10px] font-bold tracking-[0.26em] text-[#E11D74] uppercase">
               CURATED RELEASE MATRIX
             </p>
             <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-[#0E0E14] sm:text-4xl">
-              FEATURED DROPS
+              EXPLORE ZELVYN DROPS
             </h2>
           </div>
 
+          {/* Sort By Control */}
+          <div className="flex h-10 w-fit items-center gap-2 rounded-md border border-black/15 bg-white px-3.5 shadow-xs">
+            <SlidersHorizontal className="h-3.5 w-3.5 text-[#0052FF]" />
+            <span className="font-mono text-[10px] font-bold tracking-[0.14em] text-[#555563]">
+              SORT BY:
+            </span>
+            <select
+              value={sortBy}
+              onChange={(e) =>
+                setSortBy(
+                  e.target.value as
+                    | "featured"
+                    | "newest"
+                    | "price-asc"
+                    | "price-desc"
+                )
+              }
+              aria-label="Sort homepage drops by"
+              className="bg-transparent font-mono text-[11px] font-bold tracking-[0.08em] text-[#0E0E14] focus:outline-none"
+            >
+              <option value="featured">FEATURED</option>
+              <option value="newest">NEWEST DROPS</option>
+              <option value="price-asc">PRICE: LOW TO HIGH</option>
+              <option value="price-desc">PRICE: HIGH TO LOW</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Homepage Filter Bar (Gender + Category) */}
+        <div className="mb-8 flex flex-col gap-3 rounded-xl border border-black/[0.08] bg-white p-4 shadow-xs lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap items-center gap-2">
+            <span className="mr-1 inline-flex items-center gap-1 font-mono text-[10px] font-bold tracking-[0.16em] text-[#555563]">
+              <Filter className="h-3 w-3 text-[#FF4D1C]" />
+              GENDER:
+            </span>
             {(
               [
                 { key: "all", label: "FEATURED" },
@@ -384,20 +460,53 @@ export default function HomePage() {
                 type="button"
                 onClick={() => setDropFilter(tab.key)}
                 className={cn(
-                  "rounded-md border px-4 py-2 font-mono text-[11px] font-bold tracking-[0.16em] transition",
+                  "rounded-md border px-3.5 py-1.5 font-mono text-[11px] font-bold tracking-[0.14em] transition",
                   dropFilter === tab.key
-                    ? "border-[#FF4D1C] bg-[#FF4D1C] text-white shadow-[0_6px_16px_rgba(255,77,28,0.28)]"
-                    : "border-black/10 bg-white text-[#555563] hover:border-[#FF4D1C] hover:text-[#0E0E14]"
+                    ? tab.key === "girls"
+                      ? "border-[#E11D74] bg-[#E11D74] text-white shadow-sm"
+                      : tab.key === "boys"
+                        ? "border-[#0052FF] bg-[#0052FF] text-white shadow-sm"
+                        : "border-[#FF4D1C] bg-[#FF4D1C] text-white shadow-sm"
+                    : "border-black/10 bg-[#F3F4F8] text-[#555563] hover:border-[#FF4D1C] hover:text-[#0E0E14]"
                 )}
               >
                 {tab.label}
               </button>
             ))}
           </div>
+
+          <div className="flex flex-wrap items-center gap-1.5 border-t border-black/[0.06] pt-3 lg:border-t-0 lg:pt-0">
+            <span className="mr-1 font-mono text-[10px] font-bold tracking-[0.16em] text-[#555563]">
+              CATEGORY:
+            </span>
+            {(
+              [
+                { key: "all", label: "ALL" },
+                { key: "casual", label: "CASUAL" },
+                { key: "formal", label: "FORMAL" },
+                { key: "sports", label: "SPORTS" },
+                { key: "slippers", label: "SLIPPERS" },
+              ] as const
+            ).map((cat) => (
+              <button
+                key={cat.key}
+                type="button"
+                onClick={() => setCategoryFilter(cat.key)}
+                className={cn(
+                  "rounded-md border px-3 py-1 font-mono text-[10px] font-bold tracking-[0.14em] transition",
+                  categoryFilter === cat.key
+                    ? "border-[#0E0E14] bg-[#0E0E14] text-white"
+                    : "border-black/10 bg-[#F3F4F8] text-[#555563] hover:border-[#0E0E14] hover:text-[#0E0E14]"
+                )}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredProducts.map((product) => (
+          {filteredDrops.map((product) => (
             <ProductCard
               key={product.id}
               product={product}
@@ -411,7 +520,7 @@ export default function HomePage() {
             href="/shop"
             className="inline-flex h-12 items-center gap-3 rounded-md bg-[#0E0E14] px-8 font-mono text-xs font-bold tracking-[0.18em] text-white shadow-md transition hover:bg-[#FF4D1C]"
           >
-            OPEN COMPLETE 24-SHOE CATALOG
+            OPEN COMPLETE 24-SHOE CATALOG &amp; ALL FILTERS
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -435,8 +544,8 @@ export default function HomePage() {
               SEASON 01 / 11:11 ARCHIVE SALE — UP TO 50% OFF
             </h2>
             <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/90">
-              Selected Kinetix Joggers, Tactical Court Grippers, Chalk Noir
-              Lows, and Cloud Contour Slides marked down for 24 hours. Use promo{" "}
+              Selected ZELVYN Aero Joggers, Rose Court Lows, Tactical Grippers,
+              and Strawberry Pillow Slides marked down for 24 hours. Use promo{" "}
               <code className="rounded bg-white/20 px-1.5 py-0.5 font-mono font-bold text-white">
                 REAL10
               </code>{" "}
@@ -489,13 +598,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. THE ZELVYN STANDARD (PACKAGING & CRAFT) */}
+      {/* 6. THE ZELVYN STANDARD (PACKAGING, EXCHANGE POLICY & LIVE TRACKING) */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
           <div className="overflow-hidden rounded-xl border border-black/10 bg-[#FFF6F2] shadow-sm lg:col-span-6">
             <img
               src="/images/hero/zelvyn-box.png"
-              alt="Signature ZELVYN collector shoebox"
+              alt="Signature ivory and coral ZELVYN collector shoebox"
               className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-105"
             />
           </div>
@@ -508,9 +617,9 @@ export default function HomePage() {
               COLLECTOR BOXED. BUILT TO ARRIVE CLEAN.
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-[#555563]">
-              Every pair ships inside ZELVYN&apos;s rigid 900gsm collector
-              shoebox finished with crisp embossed lettering, protective
-              tissue wrap, and a serialized digital receipt.
+              Every pair ships inside ZELVYN&apos;s rigid 900gsm ivory &amp;
+              coral collector shoebox finished with embossed lettering, peach
+              tissue wrap, and an official Order No. receipt.
             </p>
 
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -528,21 +637,21 @@ export default function HomePage() {
                   desc: "Free delivery across Pakistan on orders above PKR 8,000.",
                 },
                 {
-                  icon: ShieldCheck,
-                  color: "text-[#0052FF] bg-[#EFF4FF]",
-                  title: "4 VERIFIED PAYMENTS",
-                  desc: "Cash on Delivery, Cards, Easypaisa / JazzCash & Bank IBAN.",
+                  icon: RefreshCw,
+                  color: "text-[#E11D74] bg-[#FFF1F6]",
+                  title: "EXCHANGE ONLY POLICY",
+                  desc: EXCHANGE_POLICY.detail,
                 },
                 {
                   icon: Sparkles,
-                  color: "text-[#E11D74] bg-[#FFF1F6]",
-                  title: "AUTHENTIC MATERIALS",
-                  desc: "Tumbled calfskin, carbon weave, and storm-welted lugs.",
+                  color: "text-[#0052FF] bg-[#EFF4FF]",
+                  title: "4 STUDIO ANGLES",
+                  desc: "Inspect 3/4 front, side profile, outsole & top views per pair.",
                 },
               ].map((feat) => (
                 <div
                   key={feat.title}
-                  className="rounded-lg border border-black/[0.08] bg-white p-4 shadow-sm"
+                  className="rounded-lg border border-black/[0.08] bg-white p-4 shadow-xs"
                 >
                   <div
                     className={cn(
@@ -562,13 +671,20 @@ export default function HomePage() {
               ))}
             </div>
 
-            <div className="mt-8 flex items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 href="/orders"
                 className="inline-flex h-11 items-center gap-2 rounded-md bg-[#0052FF] px-6 font-mono text-xs font-bold tracking-[0.16em] text-white shadow-[0_8px_20px_rgba(0,82,255,0.28)] transition hover:bg-[#0E0E14]"
               >
                 <CheckCircle2 className="h-4 w-4" />
-                TRACK LIVE ORDERS
+                TRACK ORDER BY ORDER NO.
+              </Link>
+              <Link
+                href="/shop?gender=girls"
+                className="inline-flex h-11 items-center gap-2 rounded-md border border-[#E11D74]/30 bg-[#FFF1F6] px-5 font-mono text-xs font-bold tracking-[0.14em] text-[#E11D74] transition hover:bg-[#E11D74] hover:text-white"
+              >
+                <ShieldCheck className="h-4 w-4" />
+                GIRLS PASTEL DROPS
               </Link>
             </div>
           </div>

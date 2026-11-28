@@ -50,14 +50,21 @@ export function Footer() {
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-[#555563]">
               Vibrant luxury streetwear footwear engineered for the streets of
               Karachi, Lahore, and Islamabad. Small-batch drops delivered in
-              signature collector packaging.
+              signature collector packaging.{" "}
+              <strong className="text-[#0E0E14]">
+                Exchange only within 7 days for size issues or damage — strictly
+                no returns or refunds.
+              </strong>
             </p>
-            <div className="mt-6 flex flex-wrap gap-2 font-mono text-[10px] font-semibold tracking-[0.15em]">
+            <div className="mt-6 flex flex-wrap gap-2 font-mono text-[10px] font-semibold tracking-[0.14em]">
               <span className="rounded-md border border-[#059669]/25 bg-[#ECFDF5] px-2.5 py-1 text-[#059669]">
                 FREE SHIPPING &gt; PKR 8,000
               </span>
-              <span className="rounded-md border border-[#0052FF]/25 bg-[#EFF4FF] px-2.5 py-1 text-[#0052FF]">
-                7-DAY SIZE EXCHANGE
+              <span className="rounded-md border border-[#FF4D1C]/25 bg-[#FFF1EC] px-2.5 py-1 text-[#FF4D1C]">
+                EXCHANGE ONLY (SIZE / DAMAGE)
+              </span>
+              <span className="rounded-md border border-[#E11D74]/25 bg-[#FFF1F6] px-2.5 py-1 text-[#E11D74]">
+                NO RETURN POLICY
               </span>
             </div>
           </div>
@@ -148,7 +155,7 @@ export function Footer() {
               <ul className="mt-4 space-y-2.5 text-sm font-medium text-[#3F3F4E]">
                 <li>
                   <Link href="/orders" className="transition hover:text-[#0E0E14]">
-                    Track Orders
+                    Track Order
                   </Link>
                 </li>
                 <li>

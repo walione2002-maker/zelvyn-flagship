@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { RotateCcw, Search, SlidersHorizontal } from "lucide-react";
+import { Filter, RotateCcw, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import { ALL_SUBTYPES, CATEGORY_META, PRODUCTS } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 import { QuickViewModal } from "@/components/QuickViewModal";
@@ -12,7 +12,10 @@ import { cn } from "@/lib/utils";
 type GenderFilter = "all" | Gender;
 type CategoryFilter = "all" | Category;
 type SubTypeFilter = "all" | SubType;
-type SortOption = "featured" | "price-asc" | "price-desc";
+type SortOption = "featured" | "price-asc" | "price-desc" | "newest";
+type PriceFilter = "all" | "under-10k" | "10k-18k" | "18k-plus";
+
+const ALL_EU_SIZES = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
 
 function ShopCatalogInner({
   initialQ,
@@ -31,6 +34,8 @@ function ShopCatalogInner({
   const [gender, setGender] = useState<GenderFilter>(initialGender);
   const [category, setCategory] = useState<CategoryFilter>(initialCategory);
   const [subType, setSubType] = useState<SubTypeFilter>(initialSubType);
+  const [sizeFilter, setSizeFilter] = useState<number | "all">("all");
+  const [priceFilter, setPriceFilter] = useState<PriceFilter>("all");
   const [onlySale, setOnlySale] = useState(initialSale);
   const [sortBy, setSortBy] = useState<SortOption>("featured");
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(
@@ -64,13 +69,25 @@ function ShopCatalogInner({
         return false;
       }
 
+      if (sizeFilter !== "all" && !p.sizes.includes(sizeFilter)) {
+        return false;
+      }
+
+      if (priceFilter === "under-10k" && p.pricePKR >= 10000) return false;
+      if (
+        priceFilter === "10k-18k" &&
+        (p.pricePKR < 10000 || p.pricePKR > 18000)
+      )
+        return false;
+      if (priceFilter === "18k-plus" && p.pricePKR <= 18000) return false;
+
       if (onlySale && p.badge !== "50% OFF" && !p.originalPricePKR) {
         return false;
       }
 
       if (q) {
         const hay =
-          `${p.name} ${p.sku} ${p.subType} ${p.category} ${p.gender} ${p.description}`.toLowerCase();
+          `${p.name} ${p.sku} ${p.subType} ${p.category} ${p.gender} ${p.description} ${p.colors.map((c) => c.name).join(" ")}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
 
@@ -82,6 +99,11 @@ function ShopCatalogInner({
       sorted.sort((a, b) => a.pricePKR - b.pricePKR);
     } else if (sortBy === "price-desc") {
       sorted.sort((a, b) => b.pricePKR - a.pricePKR);
+    } else if (sortBy === "newest") {
+      sorted.sort(
+        (a, b) =>
+          Number(b.badge === "NEW DROP") - Number(a.badge === "NEW DROP")
+      );
     } else {
       sorted.sort(
         (a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured))
@@ -89,16 +111,36 @@ function ShopCatalogInner({
     }
 
     return sorted;
-  }, [searchQuery, gender, category, subType, onlySale, sortBy]);
+  }, [
+    searchQuery,
+    gender,
+    category,
+    subType,
+    sizeFilter,
+    priceFilter,
+    onlySale,
+    sortBy,
+  ]);
 
   const resetFilters = () => {
     setSearchQuery("");
     setGender("all");
     setCategory("all");
     setSubType("all");
+    setSizeFilter("all");
+    setPriceFilter("all");
     setOnlySale(false);
     setSortBy("featured");
   };
+
+  const hasActiveFilters =
+    searchQuery.trim() !== "" ||
+    gender !== "all" ||
+    category !== "all" ||
+    subType !== "all" ||
+    sizeFilter !== "all" ||
+    priceFilter !== "all" ||
+    onlySale;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
@@ -108,15 +150,33 @@ function ShopCatalogInner({
         </p>
         <div className="mt-2 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <h1 className="font-display text-4xl font-extrabold tracking-tight text-[#0E0E14] sm:text-5xl">
-            FOOTWEAR CATALOG
+            {gender === "girls"
+              ? "GIRLS COLLECTION"
+              : gender === "boys"
+                ? "BOYS COLLECTION"
+                : "FOOTWEAR CATALOG"}
           </h1>
           <p className="rounded-full bg-[#EFF4FF] px-3.5 py-1.5 font-mono text-xs font-bold tracking-[0.14em] text-[#0052FF]">
-            SHOWING {filteredProducts.length} OF {PRODUCTS.length} SILHOUETTES
+            SHOWING {filteredProducts.length} OF {PRODUCTS.length} ARTICLES
           </p>
         </div>
+
+        {gender === "girls" && (
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#E11D74]/25 bg-gradient-to-r from-[#FFF1F6] via-[#FAF5FF] to-[#FFF7ED] px-5 py-3.5">
+            <div className="flex items-center gap-2.5">
+              <Sparkles className="h-4 w-4 text-[#E11D74]" />
+              <span className="font-mono text-xs font-bold tracking-[0.14em] text-[#E11D74] uppercase">
+                PASTEL &amp; GIRLY EDITION — BLUSH PINK · ROSE PEARL · LILAC · MINT · BUBBLEGUM
+              </span>
+            </div>
+            <span className="font-mono text-[10px] font-semibold text-[#555563]">
+              EU 36 — EU 41 · 4 ANGLES PER ARTICLE
+            </span>
+          </div>
+        )}
       </div>
 
-      {/* Control Bar: Search + Sort */}
+      {/* Search + Sort By Control Bar */}
       <div className="mt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div className="relative max-w-xl flex-1">
           <Search className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[#757585]" />
@@ -124,7 +184,7 @@ function ShopCatalogInner({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search sneakers, grippers, loafers, crocs, or SKU..."
+            placeholder="Search blush sneakers, rose loafers, lilac crocs, grippers, or SKU..."
             aria-label="Search products"
             className="h-11 w-full rounded-md border border-black/10 bg-white pr-4 pl-10 text-sm text-[#0E0E14] shadow-xs placeholder:text-[#8E8E9E] focus:border-[#FF4D1C] focus:outline-none"
           />
@@ -141,19 +201,25 @@ function ShopCatalogInner({
                 : "border-black/10 bg-white text-[#555563] hover:border-[#FF4D1C] hover:text-[#FF4D1C]"
             )}
           >
-            11:11 ARCHIVE DEALS
+            50% OFF DEALS
           </button>
 
-          <div className="flex h-11 items-center gap-2 rounded-md border border-black/10 bg-white px-3">
+          <div className="flex h-11 items-center gap-2 rounded-md border border-black/15 bg-white px-3.5 shadow-xs">
             <SlidersHorizontal className="h-3.5 w-3.5 text-[#0052FF]" />
+            <span className="font-mono text-[10px] font-bold tracking-[0.14em] text-[#555563] uppercase">
+              SORT BY:
+            </span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
-              aria-label="Sort products"
-              className="bg-transparent font-mono text-[11px] font-semibold tracking-[0.12em] text-[#0E0E14] focus:outline-none"
+              aria-label="Sort products by"
+              className="bg-transparent font-mono text-[11px] font-bold tracking-[0.1em] text-[#0E0E14] focus:outline-none"
             >
               <option value="featured" className="bg-white">
-                SORT: FEATURED
+                FEATURED
+              </option>
+              <option value="newest" className="bg-white">
+                NEWEST DROPS
               </option>
               <option value="price-asc" className="bg-white">
                 PRICE: LOW TO HIGH
@@ -166,8 +232,25 @@ function ShopCatalogInner({
         </div>
       </div>
 
-      {/* Filter Rows: Gender -> Category -> SubType */}
-      <div className="mt-6 space-y-3 rounded-xl border border-black/[0.08] bg-white p-4 shadow-xs sm:p-5">
+      {/* Explicit Filters Panel */}
+      <div className="mt-5 space-y-3 rounded-xl border border-black/[0.08] bg-white p-4 shadow-xs sm:p-5">
+        <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
+          <div className="flex items-center gap-2 font-mono text-[11px] font-bold tracking-[0.18em] text-[#0E0E14] uppercase">
+            <Filter className="h-3.5 w-3.5 text-[#FF4D1C]" />
+            <span>FILTERS</span>
+          </div>
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="inline-flex items-center gap-1 font-mono text-[10px] font-bold tracking-[0.14em] text-[#E11D74] uppercase hover:underline"
+            >
+              <RotateCcw className="h-3 w-3" />
+              CLEAR ALL FILTERS
+            </button>
+          )}
+        </div>
+
         <div className="flex flex-wrap items-center gap-2">
           <span className="mr-2 w-20 font-mono text-[10px] font-bold tracking-[0.18em] text-[#555563] uppercase">
             GENDER
@@ -234,7 +317,7 @@ function ShopCatalogInner({
 
         <div className="flex flex-wrap items-center gap-2 border-t border-black/[0.06] pt-3">
           <span className="mr-2 w-20 font-mono text-[10px] font-bold tracking-[0.18em] text-[#555563] uppercase">
-            SILHOUETTE
+            ARTICLE TYPE
           </span>
           <button
             type="button"
@@ -263,6 +346,69 @@ function ShopCatalogInner({
               {st}
             </button>
           ))}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-4 border-t border-black/[0.06] pt-3">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="mr-1 font-mono text-[10px] font-bold tracking-[0.18em] text-[#555563] uppercase">
+              PRICE:
+            </span>
+            {(
+              [
+                { key: "all", label: "All Prices" },
+                { key: "under-10k", label: "< PKR 10,000" },
+                { key: "10k-18k", label: "PKR 10K – 18K" },
+                { key: "18k-plus", label: "PKR 18K+" },
+              ] as const
+            ).map((pr) => (
+              <button
+                key={pr.key}
+                type="button"
+                onClick={() => setPriceFilter(pr.key)}
+                className={cn(
+                  "rounded-md border px-2.5 py-1 font-mono text-[10px] font-bold transition",
+                  priceFilter === pr.key
+                    ? "border-[#059669] bg-[#059669] text-white"
+                    : "border-black/10 bg-[#F3F4F8] text-[#555563] hover:border-[#059669]"
+                )}
+              >
+                {pr.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-1">
+            <span className="mr-1 font-mono text-[10px] font-bold tracking-[0.18em] text-[#555563] uppercase">
+              EU SIZE:
+            </span>
+            <button
+              type="button"
+              onClick={() => setSizeFilter("all")}
+              className={cn(
+                "rounded border px-2 py-0.5 font-mono text-[10px] font-bold transition",
+                sizeFilter === "all"
+                  ? "border-[#0E0E14] bg-[#0E0E14] text-white"
+                  : "border-black/10 bg-[#F3F4F8] text-[#555563]"
+              )}
+            >
+              ALL
+            </button>
+            {ALL_EU_SIZES.map((sz) => (
+              <button
+                key={sz}
+                type="button"
+                onClick={() => setSizeFilter(sz)}
+                className={cn(
+                  "rounded border px-2 py-0.5 font-mono text-[10px] font-bold transition",
+                  sizeFilter === sz
+                    ? "border-[#FF4D1C] bg-[#FF4D1C] text-white"
+                    : "border-black/10 bg-[#F3F4F8] text-[#555563] hover:border-[#FF4D1C]"
+                )}
+              >
+                {sz}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
